@@ -10,18 +10,17 @@ submitted to Climatic Change, available [here](file)
 
 ## Authors
 
-* **Luciano Raso** - [Personal Page](https://www.tudelft.nl/en/tpm/about-the-faculty/departments/multi-actor-systems/people/researchers/dr-ir-lr-luciano-raso/) -- [git-hub repository](https://github.com/luciofaso) -- [Academic Activity](https://scholar.google.com/citations?user=_82Ogc8AAAAJ&hl=en&oi=ao).
+* **Luciano Raso** -- [Personal website](www.lraso.com) -- [git-hub repository](https://github.com/luciofaso) -- [Academic Activity](https://scholar.google.com/citations?user=_82Ogc8AAAAJ&hl=en&oi=ao)
 
-g
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
-I wish to thank the coauthors of these papers:
+I wish to thank the coauthors of the scientific publications:
 
-* Jos Timmermans [Personal Page](https://www.tudelft.nl/en/tpm/about-the-faculty/departments/multi-actor-systems/people/researchers/drir-js-jos-timmermans/) 
+* Jos Timmermans [Personal Page](https://www.tudelft.nl/en/tpm/about-the-faculty/departments/multi-actor-systems/people/researchers/drir-js-jos-timmermans/)
 * Jan Kwakkel [Personal Page](https://www.tudelft.nl/en/tpm/about-the-faculty/departments/multi-actor-systems/people/associate-professors/drir-jh-jan-kwakkel/)
 * Geremy Panthou [Personal Page](http://pp.ige-grenoble.fr/pageperso/panthou/)
-
