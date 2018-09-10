@@ -4,7 +4,7 @@ These notebooks presents three applications of Monitoring of Dynamic Adaptive Po
 
 1. [Raso et al. * How to Evaluate a Monitoring System for Adaptive Policies : Criteria for Signpost Selection and their Model Based Evaluation *
 submitted to Climatic Change](https://github.com/luciofaso/Monitoring_DAP/tree/master/1_Niger)
-2. [Raso et al. * Graphical Instruments for a Timely Adaptation to Climate Change *, submitted to Climatic Change] (https://github.com/luciofaso/Monitoring_DAP/tree/master/2_Afsluitdijk)
+2. [Raso et al. * Graphical Instruments for a Timely Adaptation to Climate Change *, submitted to Climatic Change](https://github.com/luciofaso/Monitoring_DAP/tree/master/2_Afsluitdijk)
 3. Raso et al. * Monitoring of Dynamic Adaptive Policies: Design of a Monitoring System by Scenario Discovery * , in preparation
 
 
