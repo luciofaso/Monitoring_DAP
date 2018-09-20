@@ -1,6 +1,13 @@
-# Model adapted from xx
+# -*- coding: utf-8 -*-
+__author__      = 'Luciano Raso'
+__copyright__   = 'Copyright 2018'
+__license__     = 'GNU GPL'
+
+"""
+Model adapted from xx
 # Full information to be found in
 # Wave run-up and overtopping Jentsje W. van der Meer
+"""
 
 cimport numpy as np
 import numpy as np
@@ -14,7 +21,7 @@ from libc.math cimport sqrt, log, exp
 
 
 
-def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300):
+def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300, bint constant_waves=False):
     """calculate the frequency of failure, by montecarlo using a raw implementation of importance sampling
 
     Args:
@@ -46,20 +53,21 @@ def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=1000
 
     freq_failure=freq_fail_importance_sampling(average_water_level, surge_importance_sample ,
                                                crown_height, slope, gamma_b, gamma_beta, gamma_f, q_critical,
-                                               N, base_year)
+                                               N, base_year, constant_waves)
 
     return freq_failure
 
 
 
 
-def freq_fail_importance_sampling ( float average_water_level,
+cdef freq_fail_importance_sampling ( float average_water_level,
                                     np.ndarray[np.double_t,ndim=1] surge_level, # hydraulic boundary conditions
                                     float crown_height,float slope, #dike parameters
                                     float gamma_b,float gamma_beta,float gamma_f,float q_critical,  #dike parameters
-                                    float N, int base_year # importance sampling parameters
-                                    ):
-    """ Calculate the frequency of failure for a series of water level and wind velocity, for given dike parameters
+                                    float N,
+                                    int base_year, # importance sampling parameters
+                                    bint constant_waves):
+    """ Calculate the frequency of failure for a sample of surge water levels, for given dike parameters
     use the importance sampling method, i.e.
 
      """
@@ -74,10 +82,10 @@ def freq_fail_importance_sampling ( float average_water_level,
     N_imp_sample = len(surge_level)
     n_failure = 0
     for i in range(N_imp_sample):
-        q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M)
+        q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M, constant_waves)
         n_failure += cond_prob_dike_failure(q_occ, q_critical)
 
-    prob_of_failure = n_failure / ( N * base_year )
+    prob_of_failure = n_failure / ( N * base_year ) #TODO if prob_of_failure is 0, numeric problem
     #if prob_of_failure==0:
     frequency_of_failure = 1 / prob_of_failure
 
@@ -115,6 +123,7 @@ cdef tuple hydraulic_conditions(float SWL):
     """ calculation of hydraulic conditions, considering xxx asyntoptic behaviour and stationarity of relationships.
 
     :param SWL: surge storm water level [m]
+    reference_wl : shift of reference, [m], default is 0
     :return: wave_height, wave characteristics [m], wave_period, spectral wave period [s]
     """
 
@@ -128,7 +137,7 @@ cdef tuple hydraulic_conditions(float SWL):
     wave_height = C1 * log(SWL) + C2
     wave_period = sqrt(wave_height / C3)
 
-    return wave_height,wave_period
+    return wave_height, wave_period
 
 
 cdef double cond_prob_dike_failure(np.ndarray[np.float64_t,ndim=1] q_occ, float q_critical):
@@ -165,8 +174,8 @@ cdef np.ndarray occourred_discharge(float average_water_level,
                                     float gamma_b,
                                     float gamma_beta,
                                     float gamma_f,
-                                    int N):
-#cdef np.ndarray[double,ndim=1] occourred_discharge(float average_water_level, float surge_level, Dike dike, Gamma gamma, int N):
+                                    int N,
+                                    bint constant_waves): #hydraulic conditions
     """ sample of occurred discharges, given a water lavel, surge level and dike carachteristics
 
     :param average_water_level: average long term water level
@@ -179,17 +188,22 @@ cdef np.ndarray occourred_discharge(float average_water_level,
     """
     cdef:
         int i
-        double wave_height, wave_period, R_c, C4,C5,Q_b,Q_n
+        double wave_height, wave_period, R_c, C4, C5, Q_b, Q_n
         np.ndarray[double, ndim = 1] q_occ = np.empty(N)
 
-    wave_height, wave_period = hydraulic_conditions(surge_level)
+    if constant_waves:
+        wave_height = 2.3
+        wave_period = 4.8
+    else:
+        wave_height, wave_period = hydraulic_conditions(surge_level)
 
     xi_0 = relative_wave_runup(wave_height, wave_period, slope)
     water_level = average_water_level + surge_level
     R_c = crown_height - water_level  # creast free board
 
-    # discharge_breaking_waves
+
     for i in range(N):
+        # discharge_breaking_waves
         C4 = np.random.normal(4.7, 0.55)  # or 5.2
         Q_b = 0.067 / sqrt(slope) * gamma_b * xi_0 * \
               exp(- C4 * R_c / (wave_height * xi_0 * gamma_b * gamma_f * gamma_beta))
