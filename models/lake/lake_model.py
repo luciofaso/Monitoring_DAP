@@ -6,17 +6,7 @@ __license__     = 'GNU GPL'
 
 import numpy as np
 from scipy.interpolate import UnivariateSpline
-from scipy.special import ellipeinc
 import pandas as pd
-import os
-import cython
-
-#compile pyx file
-os.system('python model/lake/setup_lake.py build_ext --inplace')
-
-import pyximport; pyximport.install() #pyximport.install(pyimport = True)
-# from model.lake.lake_model_c import lake_sim_step_c
-
 
 def sim_H(h_init, forcings, par_lake, par_wind, policy):
     """ Simulation of Lake dynamics"""
@@ -30,17 +20,13 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     forcings_daily = forcings[daily_variables.values].resample('D').mean()
 
 
-    S_lat = 1.419 * 1000000  # km^2 to m^2
-    alpha = 0.5
-    forcings_daily['inflow lateral'] = forcings_daily['precipitation'] * S_lat * alpha / par_lake['Delta_t']  # rational formula
-
     # forcings
     q_ij = forcings_daily['inflow ijssel'].values
     q_lat = forcings_daily['inflow lateral'].values
-    temperature = forcings_daily['temperature'].values
     wind_v_mean = forcings_daily['wind speed, average'].values
     wind_d = forcings_daily['wind direction'].values
     pot_evaporation = forcings_daily['potential evaporation'].values
+    q_demand = forcings_daily['water demand'].values
 
     n_days = len(q_ij)
     h_sea = forcings['sea level'].values[:n_days*24].reshape((n_days,24))
@@ -51,15 +37,13 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     # policy options
     h_target = set_target_level(policy['winter target'], policy['summer target'], forcings_daily.index).values
 
-    pump_capacity = policy['pumping capacity']
+    pump_capacity = policy['pump capacity']
     E_pump = policy['pump power']
 
     # lake parameters
     Delta_t = par_lake['Delta_t']
     K = par_lake['K']
     A = par_lake['Surface']
-    k_evap = par_lake['k_evap']
-    k_dem = par_lake['k_dem']
 
     # wind parameters
     a = par_wind['a']
@@ -71,11 +55,9 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     H = len(q_ij)
     h_bar = np.empty(H)
     h_wind = np.empty(H)
+    q_supply = np.empty(H)
     q_free = np.empty(H)
     q_pump = np.empty(H)
-    q_demand = np.empty(H)
-    q_supply = np.empty(H)
-    u_pump = np.empty(H)
 
     # initialize
     h_bar[0] = h_init
@@ -83,15 +65,21 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     # cycle
     for t in range(1,H-1):
         h_wind[t] = wind_setup (wind_v_mean[t], wind_d[t], h_bar[t-1], a, b, c, h_0_wind)
-        h_bar[t],q_free[t], q_pump[t],q_demand[t], q_supply[t] = lake_sim_step (h_bar[t-1], h_wind[t],
-                                                  q_ij[t], q_lat[t], temperature[t], pot_evaporation[t],
-                                                  h_sea[t][:],
-                                                  h_target[t], E_pump, pump_capacity,
-                                                  Delta_t/A, K, k_evap, k_dem)
+        h_bar[t],q_free[t], q_pump[t], q_supply[t] = lake_sim_step (h_bar[t-1], h_wind[t],
+                                                q_ij[t], q_lat[t], q_demand[t],
+                                                pot_evaporation[t],
+                                                h_sea[t][:],
+                                                h_target[t],
+                                                E_pump, pump_capacity,
+                                                Delta_t/A, K)
 
 
-    output = pd.DataFrame(np.array([h_bar, h_wind, q_free,q_pump, q_demand, q_supply]).transpose(),
-                          index = forcings_daily.index, columns=['h_bar', 'h_wind', 'q_free','q_pump', 'q_demand', 'q_supply'])
+    output = pd.DataFrame(np.array([h_bar, h_wind, q_free,q_pump, q_supply]).transpose(),
+                          index = forcings_daily.index, columns=['average water level',
+                                                                 'wind setup',
+                                                                 'sluices release',
+                                                                 'pump release',
+                                                                 'water supply'])
 
     return (output)
 
@@ -137,17 +125,17 @@ def set_target_level(winter_target, summer_target, time_index):
     return target_level
 
 
-
 def lake_sim_step(h_bar_tmin1, h_wind_t,
-                  q_ij_t, q_lat_t, temperature_t,pot_evaporation_t,
+                  q_ij_t, q_lat_t, q_demand_t,
+                  pot_evaporation_t,
                   h_sea_hourly: np.array,
-                  h_target_t, E_pump, pump_capacity,
-                  Delta_t_S, K, k_evap, k_dem
-                  ):
+                  h_target_t,
+                  E_pump, pump_capacity,
+                  Delta_t_S, K):
     """Dynamic model of the lake
 
     Args:
-        h_bar_tmin1:
+        h_bar_tmin1 (float):
         h_wind_t:
         q_ij_t:
         q_lat_t:
@@ -158,16 +146,14 @@ def lake_sim_step(h_bar_tmin1, h_wind_t,
         pump_capacity:
         Delta_t_S:
         K:
-        k_evap:
-        k_dem:
+
 
     Returns:
         h_bar_t, q_free, q_pump, q_demand_t, q_supply_t
     """
 
     # fluxes
-    q_free_max, q_pump_max = discharge_afsluitdijk(h_bar_tmin1 + h_wind_t - h_sea_hourly, K, E_pump, pump_capacity)# np.sqrt(2 * 9.8 * max(h_bar_tmin1 + h_wind_t - h_wz_t, 0))
-    q_demand_t = k_dem * temperature_t # oversimplified function of demand, proportional to temperature
+    q_free_max, q_pump_max = discharge_afsluitdijk(h_bar_tmin1 + h_wind_t - h_sea_hourly, K, E_pump, pump_capacity)
     q_supply_t = q_demand_t # heroic assumption, supply always satisfied TODO set low level lake limit
 
     #levels
@@ -181,7 +167,7 @@ def lake_sim_step(h_bar_tmin1, h_wind_t,
     q_pump = np.minimum(  (h_bar_t - h_target_t) / Delta_t_S, q_pump_max) if h_bar_t >= h_target_t else 0
     h_bar_t = h_bar_t - Delta_t_S * q_pump
 
-    return h_bar_t, q_free, q_pump, q_demand_t, q_supply_t
+    return h_bar_t, q_free, q_pump, q_supply_t
 
 
 
@@ -201,7 +187,7 @@ def discharge_afsluitdijk(Delta_h: np.array, K: float, E_pump: float,pump_capaci
     """
 
     q_free_max = np.mean( K * np.sqrt(2 * 9.8 * np.maximum(Delta_h,0) ) )
-    q_pump_max = np.mean( np.minimum( E_pump / np.maximum(-Delta_h,0),pump_capacity) )
+    q_pump_max = np.mean( E_pump / ( -np.maximum(Delta_h,0) + E_pump/pump_capacity + 1  ) )
 
     return q_free_max, q_pump_max
 

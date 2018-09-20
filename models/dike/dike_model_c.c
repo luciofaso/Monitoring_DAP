@@ -928,12 +928,8 @@ static PyObject* __Pyx_PyInt_SubtractCObj(PyObject *op1, PyObject *op2, long int
     (inplace ? PyNumber_InPlaceSubtract(op1, op2) : PyNumber_Subtract(op1, op2))
 #endif
 
-/* GetModuleGlobalName.proto */
-static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
-
-/* ArgTypeTest.proto */
-static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, int none_allowed,
-    const char *name, int exact);
+/* ExtTypeTest.proto */
+static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
 
 /* BufferFormatCheck.proto */
 static CYTHON_INLINE int  __Pyx_GetBufferAndValidate(Py_buffer* buf, PyObject* obj,
@@ -980,8 +976,8 @@ static void __Pyx_WriteUnraisable(const char *name, int clineno,
                                   int lineno, const char *filename,
                                   int full_traceback, int nogil);
 
-/* ExtTypeTest.proto */
-static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
+/* GetModuleGlobalName.proto */
+static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 
 /* RaiseTooManyValuesToUnpack.proto */
 static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected);
@@ -1238,9 +1234,10 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, cha
 
 /* Module declarations from 'dike_model_c' */
 static float __pyx_v_12dike_model_c_g;
+static PyObject *__pyx_f_12dike_model_c_freq_fail_importance_sampling(float, PyArrayObject *, float, float, float, float, float, float, float, int, int); /*proto*/
 static PyObject *__pyx_f_12dike_model_c_hydraulic_conditions(float); /*proto*/
 static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *, float); /*proto*/
-static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float, float, float, float, float, float, float, int); /*proto*/
+static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float, float, float, float, float, float, float, int, int); /*proto*/
 static float __pyx_f_12dike_model_c_relative_wave_runup(float, float, float); /*proto*/
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_double_t = { "double_t", NULL, sizeof(__pyx_t_5numpy_double_t), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
@@ -1252,9 +1249,7 @@ int __pyx_module_is_main_dike_model_c = 0;
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_RuntimeError;
-static const char __pyx_k_M[] = "M";
 static const char __pyx_k_N[] = "N";
-static const char __pyx_k_i[] = "i";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_ppf[] = "ppf";
 static const char __pyx_k_rvs[] = "rvs";
@@ -1262,92 +1257,89 @@ static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_empty[] = "empty";
 static const char __pyx_k_numpy[] = "numpy";
-static const char __pyx_k_q_occ[] = "q_occ";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_slope[] = "slope";
+static const char __pyx_k_author[] = "__author__";
 static const char __pyx_k_height[] = "height";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_normal[] = "normal";
 static const char __pyx_k_random[] = "random";
+static const char __pyx_k_GNU_GPL[] = "GNU GPL";
 static const char __pyx_k_gamma_b[] = "gamma_b";
 static const char __pyx_k_gamma_f[] = "gamma_f";
+static const char __pyx_k_license[] = "__license__";
 static const char __pyx_k_dike_par[] = "dike_par";
 static const char __pyx_k_base_year[] = "base_year";
-static const char __pyx_k_n_failure[] = "n_failure";
+static const char __pyx_k_copyright[] = "__copyright__";
 static const char __pyx_k_ValueError[] = "ValueError";
 static const char __pyx_k_gamma_beta[] = "gamma_beta";
 static const char __pyx_k_q_critical[] = "q_critical";
-static const char __pyx_k_surge_level[] = "surge_level";
-static const char __pyx_k_N_imp_sample[] = "N_imp_sample";
+static const char __pyx_k_Luciano_Raso[] = "Luciano Raso";
 static const char __pyx_k_RuntimeError[] = "RuntimeError";
 static const char __pyx_k_crown_height[] = "crown_height";
 static const char __pyx_k_dike_model_c[] = "dike_model_c";
 static const char __pyx_k_freq_failure[] = "freq_failure";
 static const char __pyx_k_surge_sample[] = "surge_sample";
-static const char __pyx_k_prob_of_failure[] = "prob_of_failure";
+static const char __pyx_k_Copyright_2018[] = "Copyright 2018";
+static const char __pyx_k_constant_waves[] = "constant_waves";
 static const char __pyx_k_surge_base_year[] = "surge_base_year";
 static const char __pyx_k_surge_level_pdf[] = "surge_level_pdf";
 static const char __pyx_k_frequency_failure[] = "frequency_failure";
 static const char __pyx_k_average_water_level[] = "average_water_level";
-static const char __pyx_k_frequency_of_failure[] = "frequency_of_failure";
 static const char __pyx_k_surge_importance_sample[] = "surge_importance_sample";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
-static const char __pyx_k_freq_fail_importance_sampling[] = "freq_fail_importance_sampling";
-static const char __pyx_k_Users_lraso_Dropbox_Monitoring[] = "/Users/lraso/Dropbox/Monitoring_for_DAPP/Experiments/model/dike/dike_model_c.pyx";
+static const char __pyx_k_Users_lraso_Dropbox_Monitoring[] = "/Users/lraso/Dropbox/Monitoring_for_DAPP/Experiments/models/dike/dike_model_c.pyx";
 static const char __pyx_k_unknown_dtype_code_in_numpy_pxd[] = "unknown dtype code in numpy.pxd (%d)";
 static const char __pyx_k_Format_string_allocated_too_shor[] = "Format string allocated too short, see comment in numpy.pxd";
 static const char __pyx_k_Non_native_byte_order_not_suppor[] = "Non-native byte order not supported";
 static const char __pyx_k_ndarray_is_not_Fortran_contiguou[] = "ndarray is not Fortran contiguous";
 static const char __pyx_k_Format_string_allocated_too_shor_2[] = "Format string allocated too short.";
+static PyObject *__pyx_kp_s_Copyright_2018;
 static PyObject *__pyx_kp_u_Format_string_allocated_too_shor;
 static PyObject *__pyx_kp_u_Format_string_allocated_too_shor_2;
-static PyObject *__pyx_n_s_M;
+static PyObject *__pyx_kp_s_GNU_GPL;
+static PyObject *__pyx_kp_s_Luciano_Raso;
 static PyObject *__pyx_n_s_N;
-static PyObject *__pyx_n_s_N_imp_sample;
 static PyObject *__pyx_kp_u_Non_native_byte_order_not_suppor;
 static PyObject *__pyx_n_s_RuntimeError;
 static PyObject *__pyx_kp_s_Users_lraso_Dropbox_Monitoring;
 static PyObject *__pyx_n_s_ValueError;
+static PyObject *__pyx_n_s_author;
 static PyObject *__pyx_n_s_average_water_level;
 static PyObject *__pyx_n_s_base_year;
+static PyObject *__pyx_n_s_constant_waves;
+static PyObject *__pyx_n_s_copyright;
 static PyObject *__pyx_n_s_crown_height;
 static PyObject *__pyx_n_s_dike_model_c;
 static PyObject *__pyx_n_s_dike_par;
 static PyObject *__pyx_n_s_empty;
-static PyObject *__pyx_n_s_freq_fail_importance_sampling;
 static PyObject *__pyx_n_s_freq_failure;
 static PyObject *__pyx_n_s_frequency_failure;
-static PyObject *__pyx_n_s_frequency_of_failure;
 static PyObject *__pyx_n_s_gamma_b;
 static PyObject *__pyx_n_s_gamma_beta;
 static PyObject *__pyx_n_s_gamma_f;
 static PyObject *__pyx_n_s_height;
-static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_import;
+static PyObject *__pyx_n_s_license;
 static PyObject *__pyx_n_s_main;
-static PyObject *__pyx_n_s_n_failure;
 static PyObject *__pyx_kp_u_ndarray_is_not_C_contiguous;
 static PyObject *__pyx_kp_u_ndarray_is_not_Fortran_contiguou;
 static PyObject *__pyx_n_s_normal;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_n_s_ppf;
-static PyObject *__pyx_n_s_prob_of_failure;
 static PyObject *__pyx_n_s_q_critical;
-static PyObject *__pyx_n_s_q_occ;
 static PyObject *__pyx_n_s_random;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_rvs;
 static PyObject *__pyx_n_s_slope;
 static PyObject *__pyx_n_s_surge_base_year;
 static PyObject *__pyx_n_s_surge_importance_sample;
-static PyObject *__pyx_n_s_surge_level;
 static PyObject *__pyx_n_s_surge_level_pdf;
 static PyObject *__pyx_n_s_surge_sample;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
-static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_surge_level_pdf, PyObject *__pyx_v_dike_par, PyObject *__pyx_v_average_water_level, PyObject *__pyx_v_N, PyObject *__pyx_v_base_year); /* proto */
-static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_UNUSED PyObject *__pyx_self, float __pyx_v_average_water_level, PyArrayObject *__pyx_v_surge_level, float __pyx_v_crown_height, float __pyx_v_slope, float __pyx_v_gamma_b, float __pyx_v_gamma_beta, float __pyx_v_gamma_f, float __pyx_v_q_critical, float __pyx_v_N, int __pyx_v_base_year); /* proto */
+static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_surge_level_pdf, PyObject *__pyx_v_dike_par, PyObject *__pyx_v_average_water_level, PyObject *__pyx_v_N, PyObject *__pyx_v_base_year, int __pyx_v_constant_waves); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_float_2_3;
@@ -1367,14 +1359,12 @@ static PyObject *__pyx_tuple__6;
 static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
-static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_codeobj__10;
-static PyObject *__pyx_codeobj__12;
 
-/* "dike_model_c.pyx":17
+/* "dike_model_c.pyx":24
  * 
  * 
- * def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300):             # <<<<<<<<<<<<<<
+ * def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300, bint constant_waves=False):             # <<<<<<<<<<<<<<
  *     """calculate the frequency of failure, by montecarlo using a raw implementation of importance sampling
  * 
  */
@@ -1389,12 +1379,13 @@ static PyObject *__pyx_pw_12dike_model_c_1frequency_failure(PyObject *__pyx_self
   PyObject *__pyx_v_average_water_level = 0;
   PyObject *__pyx_v_N = 0;
   PyObject *__pyx_v_base_year = 0;
+  int __pyx_v_constant_waves;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("frequency_failure (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_surge_level_pdf,&__pyx_n_s_dike_par,&__pyx_n_s_average_water_level,&__pyx_n_s_N,&__pyx_n_s_base_year,0};
-    PyObject* values[5] = {0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_surge_level_pdf,&__pyx_n_s_dike_par,&__pyx_n_s_average_water_level,&__pyx_n_s_N,&__pyx_n_s_base_year,&__pyx_n_s_constant_waves,0};
+    PyObject* values[6] = {0,0,0,0,0,0};
     values[2] = ((PyObject *)__pyx_int_0);
     values[3] = ((PyObject *)__pyx_int_10000);
     values[4] = ((PyObject *)__pyx_int_300);
@@ -1402,6 +1393,7 @@ static PyObject *__pyx_pw_12dike_model_c_1frequency_failure(PyObject *__pyx_self
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
@@ -1418,7 +1410,7 @@ static PyObject *__pyx_pw_12dike_model_c_1frequency_failure(PyObject *__pyx_self
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_dike_par)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("frequency_failure", 0, 2, 5, 1); __PYX_ERR(0, 17, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("frequency_failure", 0, 2, 6, 1); __PYX_ERR(0, 24, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -1435,12 +1427,18 @@ static PyObject *__pyx_pw_12dike_model_c_1frequency_failure(PyObject *__pyx_self
           PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_base_year);
           if (value) { values[4] = value; kw_args--; }
         }
+        case  5:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_constant_waves);
+          if (value) { values[5] = value; kw_args--; }
+        }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "frequency_failure") < 0)) __PYX_ERR(0, 17, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "frequency_failure") < 0)) __PYX_ERR(0, 24, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
@@ -1455,23 +1453,28 @@ static PyObject *__pyx_pw_12dike_model_c_1frequency_failure(PyObject *__pyx_self
     __pyx_v_average_water_level = values[2];
     __pyx_v_N = values[3];
     __pyx_v_base_year = values[4];
+    if (values[5]) {
+      __pyx_v_constant_waves = __Pyx_PyObject_IsTrue(values[5]); if (unlikely((__pyx_v_constant_waves == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    } else {
+      __pyx_v_constant_waves = ((int)0);
+    }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("frequency_failure", 0, 2, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 17, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("frequency_failure", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 24, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("dike_model_c.frequency_failure", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_12dike_model_c_frequency_failure(__pyx_self, __pyx_v_surge_level_pdf, __pyx_v_dike_par, __pyx_v_average_water_level, __pyx_v_N, __pyx_v_base_year);
+  __pyx_r = __pyx_pf_12dike_model_c_frequency_failure(__pyx_self, __pyx_v_surge_level_pdf, __pyx_v_dike_par, __pyx_v_average_water_level, __pyx_v_N, __pyx_v_base_year, __pyx_v_constant_waves);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_surge_level_pdf, PyObject *__pyx_v_dike_par, PyObject *__pyx_v_average_water_level, PyObject *__pyx_v_N, PyObject *__pyx_v_base_year) {
+static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_surge_level_pdf, PyObject *__pyx_v_dike_par, PyObject *__pyx_v_average_water_level, PyObject *__pyx_v_N, PyObject *__pyx_v_base_year, int __pyx_v_constant_waves) {
   PyObject *__pyx_v_crown_height = NULL;
   PyObject *__pyx_v_slope = NULL;
   PyObject *__pyx_v_gamma_b = NULL;
@@ -1489,91 +1492,99 @@ static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObjec
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
-  Py_ssize_t __pyx_t_6;
+  float __pyx_t_6;
+  float __pyx_t_7;
+  float __pyx_t_8;
+  float __pyx_t_9;
+  float __pyx_t_10;
+  float __pyx_t_11;
+  float __pyx_t_12;
+  float __pyx_t_13;
+  int __pyx_t_14;
   __Pyx_RefNannySetupContext("frequency_failure", 0);
 
-  /* "dike_model_c.pyx":36
+  /* "dike_model_c.pyx":43
  *     """
  * 
  *     crown_height = dike_par['height']             # <<<<<<<<<<<<<<
  *     slope = dike_par['slope']
  *     gamma_b = dike_par['gamma_b']
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_crown_height = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":37
+  /* "dike_model_c.pyx":44
  * 
  *     crown_height = dike_par['height']
  *     slope = dike_par['slope']             # <<<<<<<<<<<<<<
  *     gamma_b = dike_par['gamma_b']
  *     gamma_beta = dike_par['gamma_beta']
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_slope = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":38
+  /* "dike_model_c.pyx":45
  *     crown_height = dike_par['height']
  *     slope = dike_par['slope']
  *     gamma_b = dike_par['gamma_b']             # <<<<<<<<<<<<<<
  *     gamma_beta = dike_par['gamma_beta']
  *     gamma_f = dike_par['gamma_f']
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_gamma_b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_gamma_b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_gamma_b = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":39
+  /* "dike_model_c.pyx":46
  *     slope = dike_par['slope']
  *     gamma_b = dike_par['gamma_b']
  *     gamma_beta = dike_par['gamma_beta']             # <<<<<<<<<<<<<<
  *     gamma_f = dike_par['gamma_f']
  *     q_critical = dike_par['q_critical']
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_gamma_beta); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_gamma_beta); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_gamma_beta = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":40
+  /* "dike_model_c.pyx":47
  *     gamma_b = dike_par['gamma_b']
  *     gamma_beta = dike_par['gamma_beta']
  *     gamma_f = dike_par['gamma_f']             # <<<<<<<<<<<<<<
  *     q_critical = dike_par['q_critical']
  * 
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_gamma_f); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_gamma_f); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_gamma_f = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":41
+  /* "dike_model_c.pyx":48
  *     gamma_beta = dike_par['gamma_beta']
  *     gamma_f = dike_par['gamma_f']
  *     q_critical = dike_par['q_critical']             # <<<<<<<<<<<<<<
  * 
  *     surge_sample = surge_level_pdf.rvs(N * base_year)
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_q_critical); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_dike_par, __pyx_n_s_q_critical); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_q_critical = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":43
+  /* "dike_model_c.pyx":50
  *     q_critical = dike_par['q_critical']
  * 
  *     surge_sample = surge_level_pdf.rvs(N * base_year)             # <<<<<<<<<<<<<<
  *     surge_base_year = surge_level_pdf.ppf(1 - 1 / base_year)  #NOT WORKING IN CYTHON
  *     surge_importance_sample = surge_sample[surge_sample >= surge_base_year]
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_surge_level_pdf, __pyx_n_s_rvs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_surge_level_pdf, __pyx_n_s_rvs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_v_N, __pyx_v_base_year); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_v_N, __pyx_v_base_year); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -1586,17 +1597,17 @@ static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObjec
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_3);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -1604,18 +1615,18 @@ static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObjec
   __pyx_v_surge_sample = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":44
+  /* "dike_model_c.pyx":51
  * 
  *     surge_sample = surge_level_pdf.rvs(N * base_year)
  *     surge_base_year = surge_level_pdf.ppf(1 - 1 / base_year)  #NOT WORKING IN CYTHON             # <<<<<<<<<<<<<<
  *     surge_importance_sample = surge_sample[surge_sample >= surge_base_year]
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_surge_level_pdf, __pyx_n_s_ppf); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_surge_level_pdf, __pyx_n_s_ppf); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_v_base_year); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_v_base_year); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, __pyx_t_5, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, __pyx_t_5, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = NULL;
@@ -1629,17 +1640,17 @@ static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObjec
     }
   }
   if (!__pyx_t_5) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_5); __pyx_t_5 = NULL;
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_t_3);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
@@ -1647,93 +1658,68 @@ static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObjec
   __pyx_v_surge_base_year = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":45
+  /* "dike_model_c.pyx":52
  *     surge_sample = surge_level_pdf.rvs(N * base_year)
  *     surge_base_year = surge_level_pdf.ppf(1 - 1 / base_year)  #NOT WORKING IN CYTHON
  *     surge_importance_sample = surge_sample[surge_sample >= surge_base_year]             # <<<<<<<<<<<<<<
  * 
  *     freq_failure=freq_fail_importance_sampling(average_water_level, surge_importance_sample ,
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_surge_sample, __pyx_v_surge_base_year, Py_GE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_surge_sample, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_surge_sample, __pyx_v_surge_base_year, Py_GE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_v_surge_sample, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_surge_importance_sample = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "dike_model_c.pyx":47
+  /* "dike_model_c.pyx":54
  *     surge_importance_sample = surge_sample[surge_sample >= surge_base_year]
  * 
  *     freq_failure=freq_fail_importance_sampling(average_water_level, surge_importance_sample ,             # <<<<<<<<<<<<<<
  *                                                crown_height, slope, gamma_b, gamma_beta, gamma_f, q_critical,
- *                                                N, base_year)
+ *                                                N, base_year, constant_waves)
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_freq_fail_importance_sampling); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_6 = __pyx_PyFloat_AsFloat(__pyx_v_average_water_level); if (unlikely((__pyx_t_6 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 54, __pyx_L1_error)
+  if (!(likely(((__pyx_v_surge_importance_sample) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_surge_importance_sample, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 54, __pyx_L1_error)
 
-  /* "dike_model_c.pyx":49
+  /* "dike_model_c.pyx":55
+ * 
+ *     freq_failure=freq_fail_importance_sampling(average_water_level, surge_importance_sample ,
+ *                                                crown_height, slope, gamma_b, gamma_beta, gamma_f, q_critical,             # <<<<<<<<<<<<<<
+ *                                                N, base_year, constant_waves)
+ * 
+ */
+  __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_v_crown_height); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_8 = __pyx_PyFloat_AsFloat(__pyx_v_slope); if (unlikely((__pyx_t_8 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_9 = __pyx_PyFloat_AsFloat(__pyx_v_gamma_b); if (unlikely((__pyx_t_9 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_10 = __pyx_PyFloat_AsFloat(__pyx_v_gamma_beta); if (unlikely((__pyx_t_10 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_11 = __pyx_PyFloat_AsFloat(__pyx_v_gamma_f); if (unlikely((__pyx_t_11 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_v_q_critical); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
+
+  /* "dike_model_c.pyx":56
  *     freq_failure=freq_fail_importance_sampling(average_water_level, surge_importance_sample ,
  *                                                crown_height, slope, gamma_b, gamma_beta, gamma_f, q_critical,
- *                                                N, base_year)             # <<<<<<<<<<<<<<
+ *                                                N, base_year, constant_waves)             # <<<<<<<<<<<<<<
  * 
  *     return freq_failure
  */
-  __pyx_t_4 = NULL;
-  __pyx_t_6 = 0;
-  if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_1))) {
-    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_1);
-    if (likely(__pyx_t_4)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-      __Pyx_INCREF(__pyx_t_4);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_1, function);
-      __pyx_t_6 = 1;
-    }
-  }
-  __pyx_t_3 = PyTuple_New(10+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  if (__pyx_t_4) {
-    __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
-  }
-  __Pyx_INCREF(__pyx_v_average_water_level);
-  __Pyx_GIVEREF(__pyx_v_average_water_level);
-  PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_6, __pyx_v_average_water_level);
-  __Pyx_INCREF(__pyx_v_surge_importance_sample);
-  __Pyx_GIVEREF(__pyx_v_surge_importance_sample);
-  PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_6, __pyx_v_surge_importance_sample);
-  __Pyx_INCREF(__pyx_v_crown_height);
-  __Pyx_GIVEREF(__pyx_v_crown_height);
-  PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_6, __pyx_v_crown_height);
-  __Pyx_INCREF(__pyx_v_slope);
-  __Pyx_GIVEREF(__pyx_v_slope);
-  PyTuple_SET_ITEM(__pyx_t_3, 3+__pyx_t_6, __pyx_v_slope);
-  __Pyx_INCREF(__pyx_v_gamma_b);
-  __Pyx_GIVEREF(__pyx_v_gamma_b);
-  PyTuple_SET_ITEM(__pyx_t_3, 4+__pyx_t_6, __pyx_v_gamma_b);
-  __Pyx_INCREF(__pyx_v_gamma_beta);
-  __Pyx_GIVEREF(__pyx_v_gamma_beta);
-  PyTuple_SET_ITEM(__pyx_t_3, 5+__pyx_t_6, __pyx_v_gamma_beta);
-  __Pyx_INCREF(__pyx_v_gamma_f);
-  __Pyx_GIVEREF(__pyx_v_gamma_f);
-  PyTuple_SET_ITEM(__pyx_t_3, 6+__pyx_t_6, __pyx_v_gamma_f);
-  __Pyx_INCREF(__pyx_v_q_critical);
-  __Pyx_GIVEREF(__pyx_v_q_critical);
-  PyTuple_SET_ITEM(__pyx_t_3, 7+__pyx_t_6, __pyx_v_q_critical);
-  __Pyx_INCREF(__pyx_v_N);
-  __Pyx_GIVEREF(__pyx_v_N);
-  PyTuple_SET_ITEM(__pyx_t_3, 8+__pyx_t_6, __pyx_v_N);
-  __Pyx_INCREF(__pyx_v_base_year);
-  __Pyx_GIVEREF(__pyx_v_base_year);
-  PyTuple_SET_ITEM(__pyx_t_3, 9+__pyx_t_6, __pyx_v_base_year);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_v_N); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_v_base_year); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 56, __pyx_L1_error)
+
+  /* "dike_model_c.pyx":54
+ *     surge_importance_sample = surge_sample[surge_sample >= surge_base_year]
+ * 
+ *     freq_failure=freq_fail_importance_sampling(average_water_level, surge_importance_sample ,             # <<<<<<<<<<<<<<
+ *                                                crown_height, slope, gamma_b, gamma_beta, gamma_f, q_critical,
+ *                                                N, base_year, constant_waves)
+ */
+  __pyx_t_2 = __pyx_f_12dike_model_c_freq_fail_importance_sampling(__pyx_t_6, ((PyArrayObject *)__pyx_v_surge_importance_sample), __pyx_t_7, __pyx_t_8, __pyx_t_9, __pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_v_constant_waves); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_freq_failure = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "dike_model_c.pyx":51
- *                                                N, base_year)
+  /* "dike_model_c.pyx":58
+ *                                                N, base_year, constant_waves)
  * 
  *     return freq_failure             # <<<<<<<<<<<<<<
  * 
@@ -1744,10 +1730,10 @@ static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObjec
   __pyx_r = __pyx_v_freq_failure;
   goto __pyx_L0;
 
-  /* "dike_model_c.pyx":17
+  /* "dike_model_c.pyx":24
  * 
  * 
- * def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300):             # <<<<<<<<<<<<<<
+ * def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300, bint constant_waves=False):             # <<<<<<<<<<<<<<
  *     """calculate the frequency of failure, by montecarlo using a raw implementation of importance sampling
  * 
  */
@@ -1777,152 +1763,15 @@ static PyObject *__pyx_pf_12dike_model_c_frequency_failure(CYTHON_UNUSED PyObjec
   return __pyx_r;
 }
 
-/* "dike_model_c.pyx":56
+/* "dike_model_c.pyx":63
  * 
  * 
- * def freq_fail_importance_sampling ( float average_water_level,             # <<<<<<<<<<<<<<
+ * cdef freq_fail_importance_sampling ( float average_water_level,             # <<<<<<<<<<<<<<
  *                                     np.ndarray[np.double_t,ndim=1] surge_level, # hydraulic boundary conditions
  *                                     float crown_height,float slope, #dike parameters
  */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_12dike_model_c_3freq_fail_importance_sampling(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_12dike_model_c_2freq_fail_importance_sampling[] = " Calculate the frequency of failure for a series of water level and wind velocity, for given dike parameters\n    use the importance sampling method, i.e.\n\n     ";
-static PyMethodDef __pyx_mdef_12dike_model_c_3freq_fail_importance_sampling = {"freq_fail_importance_sampling", (PyCFunction)__pyx_pw_12dike_model_c_3freq_fail_importance_sampling, METH_VARARGS|METH_KEYWORDS, __pyx_doc_12dike_model_c_2freq_fail_importance_sampling};
-static PyObject *__pyx_pw_12dike_model_c_3freq_fail_importance_sampling(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  float __pyx_v_average_water_level;
-  PyArrayObject *__pyx_v_surge_level = 0;
-  float __pyx_v_crown_height;
-  float __pyx_v_slope;
-  float __pyx_v_gamma_b;
-  float __pyx_v_gamma_beta;
-  float __pyx_v_gamma_f;
-  float __pyx_v_q_critical;
-  float __pyx_v_N;
-  int __pyx_v_base_year;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("freq_fail_importance_sampling (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_average_water_level,&__pyx_n_s_surge_level,&__pyx_n_s_crown_height,&__pyx_n_s_slope,&__pyx_n_s_gamma_b,&__pyx_n_s_gamma_beta,&__pyx_n_s_gamma_f,&__pyx_n_s_q_critical,&__pyx_n_s_N,&__pyx_n_s_base_year,0};
-    PyObject* values[10] = {0,0,0,0,0,0,0,0,0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case 10: values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
-        case  9: values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
-        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
-        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
-        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
-        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
-        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
-        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_average_water_level)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_surge_level)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 1); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-        case  2:
-        if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_crown_height)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 2); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-        case  3:
-        if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_slope)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 3); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-        case  4:
-        if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_gamma_b)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 4); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-        case  5:
-        if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_gamma_beta)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 5); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-        case  6:
-        if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_gamma_f)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 6); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-        case  7:
-        if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_q_critical)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 7); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-        case  8:
-        if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 8); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-        case  9:
-        if (likely((values[9] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_base_year)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, 9); __PYX_ERR(0, 56, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "freq_fail_importance_sampling") < 0)) __PYX_ERR(0, 56, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 10) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-      values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
-      values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
-      values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
-      values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
-      values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
-      values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
-      values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
-    }
-    __pyx_v_average_water_level = __pyx_PyFloat_AsFloat(values[0]); if (unlikely((__pyx_v_average_water_level == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 56, __pyx_L3_error)
-    __pyx_v_surge_level = ((PyArrayObject *)values[1]);
-    __pyx_v_crown_height = __pyx_PyFloat_AsFloat(values[2]); if (unlikely((__pyx_v_crown_height == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 58, __pyx_L3_error)
-    __pyx_v_slope = __pyx_PyFloat_AsFloat(values[3]); if (unlikely((__pyx_v_slope == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 58, __pyx_L3_error)
-    __pyx_v_gamma_b = __pyx_PyFloat_AsFloat(values[4]); if (unlikely((__pyx_v_gamma_b == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 59, __pyx_L3_error)
-    __pyx_v_gamma_beta = __pyx_PyFloat_AsFloat(values[5]); if (unlikely((__pyx_v_gamma_beta == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 59, __pyx_L3_error)
-    __pyx_v_gamma_f = __pyx_PyFloat_AsFloat(values[6]); if (unlikely((__pyx_v_gamma_f == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 59, __pyx_L3_error)
-    __pyx_v_q_critical = __pyx_PyFloat_AsFloat(values[7]); if (unlikely((__pyx_v_q_critical == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 59, __pyx_L3_error)
-    __pyx_v_N = __pyx_PyFloat_AsFloat(values[8]); if (unlikely((__pyx_v_N == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
-    __pyx_v_base_year = __Pyx_PyInt_As_int(values[9]); if (unlikely((__pyx_v_base_year == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("freq_fail_importance_sampling", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 56, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("dike_model_c.freq_fail_importance_sampling", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_surge_level), __pyx_ptype_5numpy_ndarray, 1, "surge_level", 0))) __PYX_ERR(0, 57, __pyx_L1_error)
-  __pyx_r = __pyx_pf_12dike_model_c_2freq_fail_importance_sampling(__pyx_self, __pyx_v_average_water_level, __pyx_v_surge_level, __pyx_v_crown_height, __pyx_v_slope, __pyx_v_gamma_b, __pyx_v_gamma_beta, __pyx_v_gamma_f, __pyx_v_q_critical, __pyx_v_N, __pyx_v_base_year);
-
-  /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_UNUSED PyObject *__pyx_self, float __pyx_v_average_water_level, PyArrayObject *__pyx_v_surge_level, float __pyx_v_crown_height, float __pyx_v_slope, float __pyx_v_gamma_b, float __pyx_v_gamma_beta, float __pyx_v_gamma_f, float __pyx_v_q_critical, float __pyx_v_N, int __pyx_v_base_year) {
+static PyObject *__pyx_f_12dike_model_c_freq_fail_importance_sampling(float __pyx_v_average_water_level, PyArrayObject *__pyx_v_surge_level, float __pyx_v_crown_height, float __pyx_v_slope, float __pyx_v_gamma_b, float __pyx_v_gamma_beta, float __pyx_v_gamma_f, float __pyx_v_q_critical, float __pyx_v_N, int __pyx_v_base_year, int __pyx_v_constant_waves) {
   int __pyx_v_i;
   int __pyx_v_N_imp_sample;
   int __pyx_v_M;
@@ -1957,11 +1806,11 @@ static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_U
   __pyx_pybuffernd_surge_level.rcbuffer = &__pyx_pybuffer_surge_level;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_surge_level.rcbuffer->pybuffer, (PyObject*)__pyx_v_surge_level, &__Pyx_TypeInfo_nn___pyx_t_5numpy_double_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 56, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_surge_level.rcbuffer->pybuffer, (PyObject*)__pyx_v_surge_level, &__Pyx_TypeInfo_nn___pyx_t_5numpy_double_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 63, __pyx_L1_error)
   }
   __pyx_pybuffernd_surge_level.diminfo[0].strides = __pyx_pybuffernd_surge_level.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_surge_level.diminfo[0].shape = __pyx_pybuffernd_surge_level.rcbuffer->pybuffer.shape[0];
 
-  /* "dike_model_c.pyx":69
+  /* "dike_model_c.pyx":77
  *     cdef:
  *         int i, N_imp_sample
  *         int M = 100 # number of sampling for each evaluation of occurred discharge             # <<<<<<<<<<<<<<
@@ -1970,40 +1819,40 @@ static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_U
  */
   __pyx_v_M = 0x64;
 
-  /* "dike_model_c.pyx":74
+  /* "dike_model_c.pyx":82
  * 
  * 
  *     N_imp_sample = len(surge_level)             # <<<<<<<<<<<<<<
  *     n_failure = 0
  *     for i in range(N_imp_sample):
  */
-  __pyx_t_1 = PyObject_Length(((PyObject *)__pyx_v_surge_level)); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(((PyObject *)__pyx_v_surge_level)); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __pyx_v_N_imp_sample = __pyx_t_1;
 
-  /* "dike_model_c.pyx":75
+  /* "dike_model_c.pyx":83
  * 
  *     N_imp_sample = len(surge_level)
  *     n_failure = 0             # <<<<<<<<<<<<<<
  *     for i in range(N_imp_sample):
- *         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M)
+ *         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M, constant_waves)
  */
   __pyx_v_n_failure = 0.0;
 
-  /* "dike_model_c.pyx":76
+  /* "dike_model_c.pyx":84
  *     N_imp_sample = len(surge_level)
  *     n_failure = 0
  *     for i in range(N_imp_sample):             # <<<<<<<<<<<<<<
- *         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M)
+ *         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M, constant_waves)
  *         n_failure += cond_prob_dike_failure(q_occ, q_critical)
  */
   __pyx_t_2 = __pyx_v_N_imp_sample;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "dike_model_c.pyx":77
+    /* "dike_model_c.pyx":85
  *     n_failure = 0
  *     for i in range(N_imp_sample):
- *         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M)             # <<<<<<<<<<<<<<
+ *         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M, constant_waves)             # <<<<<<<<<<<<<<
  *         n_failure += cond_prob_dike_failure(q_occ, q_critical)
  * 
  */
@@ -2015,9 +1864,9 @@ static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_U
     } else if (unlikely(__pyx_t_4 >= __pyx_pybuffernd_surge_level.diminfo[0].shape)) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 77, __pyx_L1_error)
+      __PYX_ERR(0, 85, __pyx_L1_error)
     }
-    __pyx_t_6 = ((PyObject *)__pyx_f_12dike_model_c_occourred_discharge(__pyx_v_average_water_level, (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_double_t *, __pyx_pybuffernd_surge_level.rcbuffer->pybuffer.buf, __pyx_t_4, __pyx_pybuffernd_surge_level.diminfo[0].strides)), __pyx_v_crown_height, __pyx_v_slope, __pyx_v_gamma_b, __pyx_v_gamma_beta, __pyx_v_gamma_f, __pyx_v_M)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 77, __pyx_L1_error)
+    __pyx_t_6 = ((PyObject *)__pyx_f_12dike_model_c_occourred_discharge(__pyx_v_average_water_level, (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_double_t *, __pyx_pybuffernd_surge_level.rcbuffer->pybuffer.buf, __pyx_t_4, __pyx_pybuffernd_surge_level.diminfo[0].strides)), __pyx_v_crown_height, __pyx_v_slope, __pyx_v_gamma_b, __pyx_v_gamma_beta, __pyx_v_gamma_f, __pyx_v_M, __pyx_v_constant_waves)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     {
       __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -2033,37 +1882,37 @@ static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_U
         }
       }
       __pyx_pybuffernd_q_occ.diminfo[0].strides = __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_q_occ.diminfo[0].shape = __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 77, __pyx_L1_error)
+      if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 85, __pyx_L1_error)
     }
     __Pyx_XDECREF_SET(__pyx_v_q_occ, ((PyArrayObject *)__pyx_t_6));
     __pyx_t_6 = 0;
 
-    /* "dike_model_c.pyx":78
+    /* "dike_model_c.pyx":86
  *     for i in range(N_imp_sample):
- *         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M)
+ *         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M, constant_waves)
  *         n_failure += cond_prob_dike_failure(q_occ, q_critical)             # <<<<<<<<<<<<<<
  * 
- *     prob_of_failure = n_failure / ( N * base_year )
+ *     prob_of_failure = n_failure / ( N * base_year ) #TODO if prob_of_failure is 0, numeric problem
  */
     __pyx_v_n_failure = (__pyx_v_n_failure + __pyx_f_12dike_model_c_cond_prob_dike_failure(((PyArrayObject *)__pyx_v_q_occ), __pyx_v_q_critical));
   }
 
-  /* "dike_model_c.pyx":80
+  /* "dike_model_c.pyx":88
  *         n_failure += cond_prob_dike_failure(q_occ, q_critical)
  * 
- *     prob_of_failure = n_failure / ( N * base_year )             # <<<<<<<<<<<<<<
+ *     prob_of_failure = n_failure / ( N * base_year ) #TODO if prob_of_failure is 0, numeric problem             # <<<<<<<<<<<<<<
  *     #if prob_of_failure==0:
  *     frequency_of_failure = 1 / prob_of_failure
  */
   __pyx_t_10 = (__pyx_v_N * __pyx_v_base_year);
   if (unlikely(__pyx_t_10 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 80, __pyx_L1_error)
+    __PYX_ERR(0, 88, __pyx_L1_error)
   }
   __pyx_v_prob_of_failure = (__pyx_v_n_failure / __pyx_t_10);
 
-  /* "dike_model_c.pyx":82
- *     prob_of_failure = n_failure / ( N * base_year )
+  /* "dike_model_c.pyx":90
+ *     prob_of_failure = n_failure / ( N * base_year ) #TODO if prob_of_failure is 0, numeric problem
  *     #if prob_of_failure==0:
  *     frequency_of_failure = 1 / prob_of_failure             # <<<<<<<<<<<<<<
  * 
@@ -2071,11 +1920,11 @@ static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_U
  */
   if (unlikely(__pyx_v_prob_of_failure == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 82, __pyx_L1_error)
+    __PYX_ERR(0, 90, __pyx_L1_error)
   }
   __pyx_v_frequency_of_failure = (1.0 / __pyx_v_prob_of_failure);
 
-  /* "dike_model_c.pyx":84
+  /* "dike_model_c.pyx":92
  *     frequency_of_failure = 1 / prob_of_failure
  * 
  *     return frequency_of_failure             # <<<<<<<<<<<<<<
@@ -2083,16 +1932,16 @@ static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_U
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_frequency_of_failure); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_frequency_of_failure); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_r = __pyx_t_6;
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "dike_model_c.pyx":56
+  /* "dike_model_c.pyx":63
  * 
  * 
- * def freq_fail_importance_sampling ( float average_water_level,             # <<<<<<<<<<<<<<
+ * cdef freq_fail_importance_sampling ( float average_water_level,             # <<<<<<<<<<<<<<
  *                                     np.ndarray[np.double_t,ndim=1] surge_level, # hydraulic boundary conditions
  *                                     float crown_height,float slope, #dike parameters
  */
@@ -2108,7 +1957,7 @@ static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_U
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_surge_level.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
   __Pyx_AddTraceback("dike_model_c.freq_fail_importance_sampling", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_q_occ.rcbuffer->pybuffer);
@@ -2120,7 +1969,7 @@ static PyObject *__pyx_pf_12dike_model_c_2freq_fail_importance_sampling(CYTHON_U
   return __pyx_r;
 }
 
-/* "dike_model_c.pyx":93
+/* "dike_model_c.pyx":101
  * 
  * 
  * cdef tuple wave_wind_model_ijssel(float wind_velocity):             # <<<<<<<<<<<<<<
@@ -2141,7 +1990,7 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("wave_wind_model_ijssel", 0);
 
-  /* "dike_model_c.pyx":102
+  /* "dike_model_c.pyx":110
  * 
  *     cdef:
  *         float m_H = 0.06666             # <<<<<<<<<<<<<<
@@ -2150,7 +1999,7 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
  */
   __pyx_v_m_H = 0.06666;
 
-  /* "dike_model_c.pyx":103
+  /* "dike_model_c.pyx":111
  *     cdef:
  *         float m_H = 0.06666
  *         float m_T = 0.12666             # <<<<<<<<<<<<<<
@@ -2159,7 +2008,7 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
  */
   __pyx_v_m_T = 0.12666;
 
-  /* "dike_model_c.pyx":104
+  /* "dike_model_c.pyx":112
  *         float m_H = 0.06666
  *         float m_T = 0.12666
  *         float T_0 = 1.34             # <<<<<<<<<<<<<<
@@ -2168,7 +2017,7 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
  */
   __pyx_v_T_0 = 1.34;
 
-  /* "dike_model_c.pyx":107
+  /* "dike_model_c.pyx":115
  *         float wave_height, wave_period
  * 
  *     wave_height = m_H * wind_velocity             # <<<<<<<<<<<<<<
@@ -2177,7 +2026,7 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
  */
   __pyx_v_wave_height = (__pyx_v_m_H * __pyx_v_wind_velocity);
 
-  /* "dike_model_c.pyx":108
+  /* "dike_model_c.pyx":116
  * 
  *     wave_height = m_H * wind_velocity
  *     wave_period = T_0 + m_T * wind_velocity             # <<<<<<<<<<<<<<
@@ -2186,7 +2035,7 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
  */
   __pyx_v_wave_period = (__pyx_v_T_0 + (__pyx_v_m_T * __pyx_v_wind_velocity));
 
-  /* "dike_model_c.pyx":111
+  /* "dike_model_c.pyx":119
  * 
  * 
  *     return wave_height,wave_period             # <<<<<<<<<<<<<<
@@ -2194,11 +2043,11 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_wave_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_wave_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_wave_period); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_wave_period); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -2210,7 +2059,7 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "dike_model_c.pyx":93
+  /* "dike_model_c.pyx":101
  * 
  * 
  * cdef tuple wave_wind_model_ijssel(float wind_velocity):             # <<<<<<<<<<<<<<
@@ -2231,7 +2080,7 @@ static PyObject *__pyx_f_12dike_model_c_wave_wind_model_ijssel(float __pyx_v_win
   return __pyx_r;
 }
 
-/* "dike_model_c.pyx":114
+/* "dike_model_c.pyx":122
  * 
  * 
  * cdef tuple hydraulic_conditions(float SWL):             # <<<<<<<<<<<<<<
@@ -2252,7 +2101,7 @@ static PyObject *__pyx_f_12dike_model_c_hydraulic_conditions(float __pyx_v_SWL) 
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("hydraulic_conditions", 0);
 
-  /* "dike_model_c.pyx":122
+  /* "dike_model_c.pyx":131
  * 
  *     cdef:
  *         float C1 = 2.70             # <<<<<<<<<<<<<<
@@ -2261,7 +2110,7 @@ static PyObject *__pyx_f_12dike_model_c_hydraulic_conditions(float __pyx_v_SWL) 
  */
   __pyx_v_C1 = 2.70;
 
-  /* "dike_model_c.pyx":123
+  /* "dike_model_c.pyx":132
  *     cdef:
  *         float C1 = 2.70
  *         float C2 = -1.70             # <<<<<<<<<<<<<<
@@ -2270,7 +2119,7 @@ static PyObject *__pyx_f_12dike_model_c_hydraulic_conditions(float __pyx_v_SWL) 
  */
   __pyx_v_C2 = -1.70;
 
-  /* "dike_model_c.pyx":124
+  /* "dike_model_c.pyx":133
  *         float C1 = 2.70
  *         float C2 = -1.70
  *         float C3 = 0.1             # <<<<<<<<<<<<<<
@@ -2279,7 +2128,7 @@ static PyObject *__pyx_f_12dike_model_c_hydraulic_conditions(float __pyx_v_SWL) 
  */
   __pyx_v_C3 = 0.1;
 
-  /* "dike_model_c.pyx":128
+  /* "dike_model_c.pyx":137
  *         float wave_period
  * 
  *     wave_height = C1 * log(SWL) + C2             # <<<<<<<<<<<<<<
@@ -2288,32 +2137,32 @@ static PyObject *__pyx_f_12dike_model_c_hydraulic_conditions(float __pyx_v_SWL) 
  */
   __pyx_v_wave_height = ((__pyx_v_C1 * log(__pyx_v_SWL)) + __pyx_v_C2);
 
-  /* "dike_model_c.pyx":129
+  /* "dike_model_c.pyx":138
  * 
  *     wave_height = C1 * log(SWL) + C2
  *     wave_period = sqrt(wave_height / C3)             # <<<<<<<<<<<<<<
  * 
- *     return wave_height,wave_period
+ *     return wave_height, wave_period
  */
   if (unlikely(__pyx_v_C3 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 129, __pyx_L1_error)
+    __PYX_ERR(0, 138, __pyx_L1_error)
   }
   __pyx_v_wave_period = sqrt((__pyx_v_wave_height / __pyx_v_C3));
 
-  /* "dike_model_c.pyx":131
+  /* "dike_model_c.pyx":140
  *     wave_period = sqrt(wave_height / C3)
  * 
- *     return wave_height,wave_period             # <<<<<<<<<<<<<<
+ *     return wave_height, wave_period             # <<<<<<<<<<<<<<
  * 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_wave_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_wave_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 140, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_wave_period); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_wave_period); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 140, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 140, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -2325,7 +2174,7 @@ static PyObject *__pyx_f_12dike_model_c_hydraulic_conditions(float __pyx_v_SWL) 
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "dike_model_c.pyx":114
+  /* "dike_model_c.pyx":122
  * 
  * 
  * cdef tuple hydraulic_conditions(float SWL):             # <<<<<<<<<<<<<<
@@ -2346,7 +2195,7 @@ static PyObject *__pyx_f_12dike_model_c_hydraulic_conditions(float __pyx_v_SWL) 
   return __pyx_r;
 }
 
-/* "dike_model_c.pyx":134
+/* "dike_model_c.pyx":143
  * 
  * 
  * cdef double cond_prob_dike_failure(np.ndarray[np.float64_t,ndim=1] q_occ, float q_critical):             # <<<<<<<<<<<<<<
@@ -2378,11 +2227,11 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
   __pyx_pybuffernd_q_occ.rcbuffer = &__pyx_pybuffer_q_occ;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_q_occ.rcbuffer->pybuffer, (PyObject*)__pyx_v_q_occ, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 134, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_q_occ.rcbuffer->pybuffer, (PyObject*)__pyx_v_q_occ, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 143, __pyx_L1_error)
   }
   __pyx_pybuffernd_q_occ.diminfo[0].strides = __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_q_occ.diminfo[0].shape = __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.shape[0];
 
-  /* "dike_model_c.pyx":148
+  /* "dike_model_c.pyx":157
  *     cdef:
  *         int i, N
  *         double m_o = 1 # to add probabilistic evaluation, make m_o and m_c stochastic             # <<<<<<<<<<<<<<
@@ -2391,7 +2240,7 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
  */
   __pyx_v_m_o = 1.0;
 
-  /* "dike_model_c.pyx":149
+  /* "dike_model_c.pyx":158
  *         int i, N
  *         double m_o = 1 # to add probabilistic evaluation, make m_o and m_c stochastic
  *         double m_c = 1             # <<<<<<<<<<<<<<
@@ -2400,17 +2249,17 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
  */
   __pyx_v_m_c = 1.0;
 
-  /* "dike_model_c.pyx":152
+  /* "dike_model_c.pyx":161
  *         double z, Z
  * 
  *     N=len(q_occ)             # <<<<<<<<<<<<<<
  *     z = 0
  *     for i in range(N):
  */
-  __pyx_t_1 = PyObject_Length(((PyObject *)__pyx_v_q_occ)); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(((PyObject *)__pyx_v_q_occ)); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 161, __pyx_L1_error)
   __pyx_v_N = __pyx_t_1;
 
-  /* "dike_model_c.pyx":153
+  /* "dike_model_c.pyx":162
  * 
  *     N=len(q_occ)
  *     z = 0             # <<<<<<<<<<<<<<
@@ -2419,7 +2268,7 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
  */
   __pyx_v_z = 0.0;
 
-  /* "dike_model_c.pyx":154
+  /* "dike_model_c.pyx":163
  *     N=len(q_occ)
  *     z = 0
  *     for i in range(N):             # <<<<<<<<<<<<<<
@@ -2430,7 +2279,7 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "dike_model_c.pyx":155
+    /* "dike_model_c.pyx":164
  *     z = 0
  *     for i in range(N):
  *         if m_o * q_occ[i] > m_c * q_critical:             # <<<<<<<<<<<<<<
@@ -2445,12 +2294,12 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
     } else if (unlikely(__pyx_t_4 >= __pyx_pybuffernd_q_occ.diminfo[0].shape)) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 155, __pyx_L1_error)
+      __PYX_ERR(0, 164, __pyx_L1_error)
     }
     __pyx_t_6 = (((__pyx_v_m_o * (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.buf, __pyx_t_4, __pyx_pybuffernd_q_occ.diminfo[0].strides))) > (__pyx_v_m_c * __pyx_v_q_critical)) != 0);
     if (__pyx_t_6) {
 
-      /* "dike_model_c.pyx":156
+      /* "dike_model_c.pyx":165
  *     for i in range(N):
  *         if m_o * q_occ[i] > m_c * q_critical:
  *             z += 1             # <<<<<<<<<<<<<<
@@ -2459,7 +2308,7 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
  */
       __pyx_v_z = (__pyx_v_z + 1.0);
 
-      /* "dike_model_c.pyx":155
+      /* "dike_model_c.pyx":164
  *     z = 0
  *     for i in range(N):
  *         if m_o * q_occ[i] > m_c * q_critical:             # <<<<<<<<<<<<<<
@@ -2469,7 +2318,7 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
     }
   }
 
-  /* "dike_model_c.pyx":157
+  /* "dike_model_c.pyx":166
  *         if m_o * q_occ[i] > m_c * q_critical:
  *             z += 1
  *     Z = z / N             # <<<<<<<<<<<<<<
@@ -2478,11 +2327,11 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
  */
   if (unlikely(__pyx_v_N == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 157, __pyx_L1_error)
+    __PYX_ERR(0, 166, __pyx_L1_error)
   }
   __pyx_v_Z = (__pyx_v_z / __pyx_v_N);
 
-  /* "dike_model_c.pyx":158
+  /* "dike_model_c.pyx":167
  *             z += 1
  *     Z = z / N
  *     return Z             # <<<<<<<<<<<<<<
@@ -2492,7 +2341,7 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
   __pyx_r = __pyx_v_Z;
   goto __pyx_L0;
 
-  /* "dike_model_c.pyx":134
+  /* "dike_model_c.pyx":143
  * 
  * 
  * cdef double cond_prob_dike_failure(np.ndarray[np.float64_t,ndim=1] q_occ, float q_critical):             # <<<<<<<<<<<<<<
@@ -2518,7 +2367,7 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
   return __pyx_r;
 }
 
-/* "dike_model_c.pyx":161
+/* "dike_model_c.pyx":170
  * 
  * 
  * cdef np.ndarray occourred_discharge(float average_water_level,             # <<<<<<<<<<<<<<
@@ -2526,7 +2375,7 @@ static double __pyx_f_12dike_model_c_cond_prob_dike_failure(PyArrayObject *__pyx
  *                                     float crown_height,
  */
 
-static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float __pyx_v_average_water_level, float __pyx_v_surge_level, float __pyx_v_crown_height, float __pyx_v_slope, float __pyx_v_gamma_b, float __pyx_v_gamma_beta, float __pyx_v_gamma_f, int __pyx_v_N) {
+static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float __pyx_v_average_water_level, float __pyx_v_surge_level, float __pyx_v_crown_height, float __pyx_v_slope, float __pyx_v_gamma_b, float __pyx_v_gamma_beta, float __pyx_v_gamma_f, int __pyx_v_N, int __pyx_v_constant_waves) {
   int __pyx_v_i;
   double __pyx_v_wave_height;
   double __pyx_v_wave_period;
@@ -2548,32 +2397,33 @@ static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float __pyx_v_a
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyArrayObject *__pyx_t_6 = NULL;
-  double __pyx_t_7;
+  int __pyx_t_7;
   double __pyx_t_8;
-  int __pyx_t_9;
+  double __pyx_t_9;
   int __pyx_t_10;
-  double __pyx_t_11;
-  Py_ssize_t __pyx_t_12;
-  int __pyx_t_13;
+  int __pyx_t_11;
+  double __pyx_t_12;
+  Py_ssize_t __pyx_t_13;
+  int __pyx_t_14;
   __Pyx_RefNannySetupContext("occourred_discharge", 0);
   __pyx_pybuffer_q_occ.pybuffer.buf = NULL;
   __pyx_pybuffer_q_occ.refcount = 0;
   __pyx_pybuffernd_q_occ.data = NULL;
   __pyx_pybuffernd_q_occ.rcbuffer = &__pyx_pybuffer_q_occ;
 
-  /* "dike_model_c.pyx":183
+  /* "dike_model_c.pyx":192
  *         int i
- *         double wave_height, wave_period, R_c, C4,C5,Q_b,Q_n
+ *         double wave_height, wave_period, R_c, C4, C5, Q_b, Q_n
  *         np.ndarray[double, ndim = 1] q_occ = np.empty(N)             # <<<<<<<<<<<<<<
  * 
- *     wave_height, wave_period = hydraulic_conditions(surge_level)
+ *     if constant_waves:
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 192, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_empty); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_empty); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 192, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 192, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -2586,28 +2436,28 @@ static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float __pyx_v_a
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 192, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 183, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 192, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
     __Pyx_GIVEREF(__pyx_t_2);
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 192, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 183, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 192, __pyx_L1_error)
   __pyx_t_6 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_q_occ.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_q_occ = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 183, __pyx_L1_error)
+      __PYX_ERR(0, 192, __pyx_L1_error)
     } else {__pyx_pybuffernd_q_occ.diminfo[0].strides = __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_q_occ.diminfo[0].shape = __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.shape[0];
     }
   }
@@ -2615,261 +2465,302 @@ static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float __pyx_v_a
   __pyx_v_q_occ = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":185
+  /* "dike_model_c.pyx":194
  *         np.ndarray[double, ndim = 1] q_occ = np.empty(N)
  * 
- *     wave_height, wave_period = hydraulic_conditions(surge_level)             # <<<<<<<<<<<<<<
+ *     if constant_waves:             # <<<<<<<<<<<<<<
+ *         wave_height = 2.3
+ *         wave_period = 4.8
+ */
+  __pyx_t_7 = (__pyx_v_constant_waves != 0);
+  if (__pyx_t_7) {
+
+    /* "dike_model_c.pyx":195
+ * 
+ *     if constant_waves:
+ *         wave_height = 2.3             # <<<<<<<<<<<<<<
+ *         wave_period = 4.8
+ *     else:
+ */
+    __pyx_v_wave_height = 2.3;
+
+    /* "dike_model_c.pyx":196
+ *     if constant_waves:
+ *         wave_height = 2.3
+ *         wave_period = 4.8             # <<<<<<<<<<<<<<
+ *     else:
+ *         wave_height, wave_period = hydraulic_conditions(surge_level)
+ */
+    __pyx_v_wave_period = 4.8;
+
+    /* "dike_model_c.pyx":194
+ *         np.ndarray[double, ndim = 1] q_occ = np.empty(N)
+ * 
+ *     if constant_waves:             # <<<<<<<<<<<<<<
+ *         wave_height = 2.3
+ *         wave_period = 4.8
+ */
+    goto __pyx_L3;
+  }
+
+  /* "dike_model_c.pyx":198
+ *         wave_period = 4.8
+ *     else:
+ *         wave_height, wave_period = hydraulic_conditions(surge_level)             # <<<<<<<<<<<<<<
  * 
  *     xi_0 = relative_wave_runup(wave_height, wave_period, slope)
  */
-  __pyx_t_1 = __pyx_f_12dike_model_c_hydraulic_conditions(__pyx_v_surge_level); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (likely(__pyx_t_1 != Py_None)) {
-    PyObject* sequence = __pyx_t_1;
-    #if CYTHON_COMPILING_IN_CPYTHON
-    Py_ssize_t size = Py_SIZE(sequence);
-    #else
-    Py_ssize_t size = PySequence_Size(sequence);
-    #endif
-    if (unlikely(size != 2)) {
-      if (size > 2) __Pyx_RaiseTooManyValuesError(2);
-      else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 185, __pyx_L1_error)
+  /*else*/ {
+    __pyx_t_1 = __pyx_f_12dike_model_c_hydraulic_conditions(__pyx_v_surge_level); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 198, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    if (likely(__pyx_t_1 != Py_None)) {
+      PyObject* sequence = __pyx_t_1;
+      #if CYTHON_COMPILING_IN_CPYTHON
+      Py_ssize_t size = Py_SIZE(sequence);
+      #else
+      Py_ssize_t size = PySequence_Size(sequence);
+      #endif
+      if (unlikely(size != 2)) {
+        if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+        else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+        __PYX_ERR(0, 198, __pyx_L1_error)
+      }
+      #if CYTHON_COMPILING_IN_CPYTHON
+      __pyx_t_3 = PyTuple_GET_ITEM(sequence, 0); 
+      __pyx_t_5 = PyTuple_GET_ITEM(sequence, 1); 
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_5);
+      #else
+      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 198, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_5 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 198, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      #endif
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    } else {
+      __Pyx_RaiseNoneNotIterableError(); __PYX_ERR(0, 198, __pyx_L1_error)
     }
-    #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_3 = PyTuple_GET_ITEM(sequence, 0); 
-    __pyx_t_5 = PyTuple_GET_ITEM(sequence, 1); 
-    __Pyx_INCREF(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_5);
-    #else
-    __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 185, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    #endif
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  } else {
-    __Pyx_RaiseNoneNotIterableError(); __PYX_ERR(0, 185, __pyx_L1_error)
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 198, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 198, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_v_wave_height = __pyx_t_8;
+    __pyx_v_wave_period = __pyx_t_9;
   }
-  __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_v_wave_height = __pyx_t_7;
-  __pyx_v_wave_period = __pyx_t_8;
+  __pyx_L3:;
 
-  /* "dike_model_c.pyx":187
- *     wave_height, wave_period = hydraulic_conditions(surge_level)
+  /* "dike_model_c.pyx":200
+ *         wave_height, wave_period = hydraulic_conditions(surge_level)
  * 
  *     xi_0 = relative_wave_runup(wave_height, wave_period, slope)             # <<<<<<<<<<<<<<
  *     water_level = average_water_level + surge_level
  *     R_c = crown_height - water_level  # creast free board
  */
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_12dike_model_c_relative_wave_runup(__pyx_v_wave_height, __pyx_v_wave_period, __pyx_v_slope)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_12dike_model_c_relative_wave_runup(__pyx_v_wave_height, __pyx_v_wave_period, __pyx_v_slope)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_xi_0 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":188
+  /* "dike_model_c.pyx":201
  * 
  *     xi_0 = relative_wave_runup(wave_height, wave_period, slope)
  *     water_level = average_water_level + surge_level             # <<<<<<<<<<<<<<
  *     R_c = crown_height - water_level  # creast free board
  * 
  */
-  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_average_water_level + __pyx_v_surge_level)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_average_water_level + __pyx_v_surge_level)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_water_level = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":189
+  /* "dike_model_c.pyx":202
  *     xi_0 = relative_wave_runup(wave_height, wave_period, slope)
  *     water_level = average_water_level + surge_level
  *     R_c = crown_height - water_level  # creast free board             # <<<<<<<<<<<<<<
  * 
- *     # discharge_breaking_waves
+ * 
  */
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_crown_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_crown_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 202, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = PyNumber_Subtract(__pyx_t_1, __pyx_v_water_level); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Subtract(__pyx_t_1, __pyx_v_water_level); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 202, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 202, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_v_R_c = __pyx_t_8;
+  __pyx_v_R_c = __pyx_t_9;
 
-  /* "dike_model_c.pyx":192
+  /* "dike_model_c.pyx":205
  * 
- *     # discharge_breaking_waves
+ * 
  *     for i in range(N):             # <<<<<<<<<<<<<<
+ *         # discharge_breaking_waves
  *         C4 = np.random.normal(4.7, 0.55)  # or 5.2
- *         Q_b = 0.067 / sqrt(slope) * gamma_b * xi_0 * \
  */
-  __pyx_t_9 = __pyx_v_N;
-  for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
-    __pyx_v_i = __pyx_t_10;
+  __pyx_t_10 = __pyx_v_N;
+  for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
+    __pyx_v_i = __pyx_t_11;
 
-    /* "dike_model_c.pyx":193
- *     # discharge_breaking_waves
+    /* "dike_model_c.pyx":207
  *     for i in range(N):
+ *         # discharge_breaking_waves
  *         C4 = np.random.normal(4.7, 0.55)  # or 5.2             # <<<<<<<<<<<<<<
  *         Q_b = 0.067 / sqrt(slope) * gamma_b * xi_0 * \
  *               exp(- C4 * R_c / (wave_height * xi_0 * gamma_b * gamma_f * gamma_beta))
  */
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 193, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 207, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 193, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_normal); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 193, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_normal); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 207, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 193, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L1_error)
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_v_C4 = __pyx_t_8;
+    __pyx_v_C4 = __pyx_t_9;
 
-    /* "dike_model_c.pyx":194
- *     for i in range(N):
+    /* "dike_model_c.pyx":208
+ *         # discharge_breaking_waves
  *         C4 = np.random.normal(4.7, 0.55)  # or 5.2
  *         Q_b = 0.067 / sqrt(slope) * gamma_b * xi_0 * \             # <<<<<<<<<<<<<<
  *               exp(- C4 * R_c / (wave_height * xi_0 * gamma_b * gamma_f * gamma_beta))
  *         # discharge_non_breaking_waves
  */
-    __pyx_t_8 = sqrt(__pyx_v_slope);
-    if (unlikely(__pyx_t_8 == 0)) {
+    __pyx_t_9 = sqrt(__pyx_v_slope);
+    if (unlikely(__pyx_t_9 == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 194, __pyx_L1_error)
+      __PYX_ERR(0, 208, __pyx_L1_error)
     }
-    __pyx_t_1 = PyFloat_FromDouble(((0.067 / __pyx_t_8) * __pyx_v_gamma_b)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble(((0.067 / __pyx_t_9) * __pyx_v_gamma_b)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 208, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_1, __pyx_v_xi_0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 194, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_1, __pyx_v_xi_0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 208, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "dike_model_c.pyx":195
+    /* "dike_model_c.pyx":209
  *         C4 = np.random.normal(4.7, 0.55)  # or 5.2
  *         Q_b = 0.067 / sqrt(slope) * gamma_b * xi_0 * \
  *               exp(- C4 * R_c / (wave_height * xi_0 * gamma_b * gamma_f * gamma_beta))             # <<<<<<<<<<<<<<
  *         # discharge_non_breaking_waves
  *         C5 = np.random.normal(2.3, 0.35)  # or 2.6
  */
-    __pyx_t_1 = PyFloat_FromDouble(((-__pyx_v_C4) * __pyx_v_R_c)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble(((-__pyx_v_C4) * __pyx_v_R_c)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_wave_height); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_wave_height); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_t_3, __pyx_v_xi_0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_t_3, __pyx_v_xi_0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_gamma_b); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_gamma_b); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_gamma_f); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_gamma_f); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_gamma_beta); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_gamma_beta); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(exp(__pyx_t_8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(exp(__pyx_t_9)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
 
-    /* "dike_model_c.pyx":194
- *     for i in range(N):
+    /* "dike_model_c.pyx":208
+ *         # discharge_breaking_waves
  *         C4 = np.random.normal(4.7, 0.55)  # or 5.2
  *         Q_b = 0.067 / sqrt(slope) * gamma_b * xi_0 * \             # <<<<<<<<<<<<<<
  *               exp(- C4 * R_c / (wave_height * xi_0 * gamma_b * gamma_f * gamma_beta))
  *         # discharge_non_breaking_waves
  */
-    __pyx_t_4 = PyNumber_Multiply(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 194, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Multiply(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 208, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 194, __pyx_L1_error)
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 208, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_v_Q_b = __pyx_t_8;
+    __pyx_v_Q_b = __pyx_t_9;
 
-    /* "dike_model_c.pyx":197
+    /* "dike_model_c.pyx":211
  *               exp(- C4 * R_c / (wave_height * xi_0 * gamma_b * gamma_f * gamma_beta))
  *         # discharge_non_breaking_waves
  *         C5 = np.random.normal(2.3, 0.35)  # or 2.6             # <<<<<<<<<<<<<<
  *         Q_n = 0.2 * exp(- C5 * R_c / (wave_height * gamma_f * gamma_beta))
  *         q_occ[i] = min(Q_b, Q_n) * sqrt(g * wave_height ** 3)  # m^3 /m / sec
  */
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_random); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_random); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 211, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_normal); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_normal); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 211, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 211, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_v_C5 = __pyx_t_8;
+    __pyx_v_C5 = __pyx_t_9;
 
-    /* "dike_model_c.pyx":198
+    /* "dike_model_c.pyx":212
  *         # discharge_non_breaking_waves
  *         C5 = np.random.normal(2.3, 0.35)  # or 2.6
  *         Q_n = 0.2 * exp(- C5 * R_c / (wave_height * gamma_f * gamma_beta))             # <<<<<<<<<<<<<<
  *         q_occ[i] = min(Q_b, Q_n) * sqrt(g * wave_height ** 3)  # m^3 /m / sec
  * 
  */
-    __pyx_t_8 = ((-__pyx_v_C5) * __pyx_v_R_c);
-    __pyx_t_7 = ((__pyx_v_wave_height * __pyx_v_gamma_f) * __pyx_v_gamma_beta);
-    if (unlikely(__pyx_t_7 == 0)) {
+    __pyx_t_9 = ((-__pyx_v_C5) * __pyx_v_R_c);
+    __pyx_t_8 = ((__pyx_v_wave_height * __pyx_v_gamma_f) * __pyx_v_gamma_beta);
+    if (unlikely(__pyx_t_8 == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 198, __pyx_L1_error)
+      __PYX_ERR(0, 212, __pyx_L1_error)
     }
-    __pyx_v_Q_n = (0.2 * exp((__pyx_t_8 / __pyx_t_7)));
+    __pyx_v_Q_n = (0.2 * exp((__pyx_t_9 / __pyx_t_8)));
 
-    /* "dike_model_c.pyx":199
+    /* "dike_model_c.pyx":213
  *         C5 = np.random.normal(2.3, 0.35)  # or 2.6
  *         Q_n = 0.2 * exp(- C5 * R_c / (wave_height * gamma_f * gamma_beta))
  *         q_occ[i] = min(Q_b, Q_n) * sqrt(g * wave_height ** 3)  # m^3 /m / sec             # <<<<<<<<<<<<<<
  * 
  *     return (q_occ)
  */
-    __pyx_t_7 = __pyx_v_Q_n;
-    __pyx_t_8 = __pyx_v_Q_b;
-    if (((__pyx_t_7 < __pyx_t_8) != 0)) {
-      __pyx_t_11 = __pyx_t_7;
+    __pyx_t_8 = __pyx_v_Q_n;
+    __pyx_t_9 = __pyx_v_Q_b;
+    if (((__pyx_t_8 < __pyx_t_9) != 0)) {
+      __pyx_t_12 = __pyx_t_8;
     } else {
-      __pyx_t_11 = __pyx_t_8;
+      __pyx_t_12 = __pyx_t_9;
     }
-    __pyx_t_12 = __pyx_v_i;
-    __pyx_t_13 = -1;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_pybuffernd_q_occ.diminfo[0].shape;
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_13 = 0;
-    } else if (unlikely(__pyx_t_12 >= __pyx_pybuffernd_q_occ.diminfo[0].shape)) __pyx_t_13 = 0;
-    if (unlikely(__pyx_t_13 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_13);
-      __PYX_ERR(0, 199, __pyx_L1_error)
+    __pyx_t_13 = __pyx_v_i;
+    __pyx_t_14 = -1;
+    if (__pyx_t_13 < 0) {
+      __pyx_t_13 += __pyx_pybuffernd_q_occ.diminfo[0].shape;
+      if (unlikely(__pyx_t_13 < 0)) __pyx_t_14 = 0;
+    } else if (unlikely(__pyx_t_13 >= __pyx_pybuffernd_q_occ.diminfo[0].shape)) __pyx_t_14 = 0;
+    if (unlikely(__pyx_t_14 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_14);
+      __PYX_ERR(0, 213, __pyx_L1_error)
     }
-    *__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.buf, __pyx_t_12, __pyx_pybuffernd_q_occ.diminfo[0].strides) = (__pyx_t_11 * sqrt((__pyx_v_12dike_model_c_g * pow(__pyx_v_wave_height, 3.0))));
+    *__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_q_occ.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_q_occ.diminfo[0].strides) = (__pyx_t_12 * sqrt((__pyx_v_12dike_model_c_g * pow(__pyx_v_wave_height, 3.0))));
   }
 
-  /* "dike_model_c.pyx":201
+  /* "dike_model_c.pyx":215
  *         q_occ[i] = min(Q_b, Q_n) * sqrt(g * wave_height ** 3)  # m^3 /m / sec
  * 
  *     return (q_occ)             # <<<<<<<<<<<<<<
@@ -2881,7 +2772,7 @@ static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float __pyx_v_a
   __pyx_r = ((PyArrayObject *)__pyx_v_q_occ);
   goto __pyx_L0;
 
-  /* "dike_model_c.pyx":161
+  /* "dike_model_c.pyx":170
  * 
  * 
  * cdef np.ndarray occourred_discharge(float average_water_level,             # <<<<<<<<<<<<<<
@@ -2916,7 +2807,7 @@ static PyArrayObject *__pyx_f_12dike_model_c_occourred_discharge(float __pyx_v_a
   return __pyx_r;
 }
 
-/* "dike_model_c.pyx":204
+/* "dike_model_c.pyx":218
  * 
  * 
  * cdef float relative_wave_runup(float wave_height, float T_s, float slope):             # <<<<<<<<<<<<<<
@@ -2933,7 +2824,7 @@ static float __pyx_f_12dike_model_c_relative_wave_runup(float __pyx_v_wave_heigh
   float __pyx_t_2;
   __Pyx_RefNannySetupContext("relative_wave_runup", 0);
 
-  /* "dike_model_c.pyx":216
+  /* "dike_model_c.pyx":230
  * 
  *     # s_0 is wave stepness
  *     s_0 = (2 * 3.14 * wave_height) / (g * T_s ** 2)             # <<<<<<<<<<<<<<
@@ -2944,11 +2835,11 @@ static float __pyx_f_12dike_model_c_relative_wave_runup(float __pyx_v_wave_heigh
   __pyx_t_2 = (__pyx_v_12dike_model_c_g * powf(__pyx_v_T_s, 2.0));
   if (unlikely(__pyx_t_2 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 216, __pyx_L1_error)
+    __PYX_ERR(0, 230, __pyx_L1_error)
   }
   __pyx_v_s_0 = (__pyx_t_1 / __pyx_t_2);
 
-  /* "dike_model_c.pyx":217
+  /* "dike_model_c.pyx":231
  *     # s_0 is wave stepness
  *     s_0 = (2 * 3.14 * wave_height) / (g * T_s ** 2)
  *     xi_0 = slope / sqrt(s_0)             # <<<<<<<<<<<<<<
@@ -2958,11 +2849,11 @@ static float __pyx_f_12dike_model_c_relative_wave_runup(float __pyx_v_wave_heigh
   __pyx_t_1 = sqrt(__pyx_v_s_0);
   if (unlikely(__pyx_t_1 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 217, __pyx_L1_error)
+    __PYX_ERR(0, 231, __pyx_L1_error)
   }
   __pyx_v_xi_0 = (__pyx_v_slope / __pyx_t_1);
 
-  /* "dike_model_c.pyx":219
+  /* "dike_model_c.pyx":233
  *     xi_0 = slope / sqrt(s_0)
  * 
  *     return xi_0             # <<<<<<<<<<<<<<
@@ -2972,7 +2863,7 @@ static float __pyx_f_12dike_model_c_relative_wave_runup(float __pyx_v_wave_heigh
   __pyx_r = __pyx_v_xi_0;
   goto __pyx_L0;
 
-  /* "dike_model_c.pyx":204
+  /* "dike_model_c.pyx":218
  * 
  * 
  * cdef float relative_wave_runup(float wave_height, float T_s, float slope):             # <<<<<<<<<<<<<<
@@ -5134,49 +5025,47 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
+  {&__pyx_kp_s_Copyright_2018, __pyx_k_Copyright_2018, sizeof(__pyx_k_Copyright_2018), 0, 0, 1, 0},
   {&__pyx_kp_u_Format_string_allocated_too_shor, __pyx_k_Format_string_allocated_too_shor, sizeof(__pyx_k_Format_string_allocated_too_shor), 0, 1, 0, 0},
   {&__pyx_kp_u_Format_string_allocated_too_shor_2, __pyx_k_Format_string_allocated_too_shor_2, sizeof(__pyx_k_Format_string_allocated_too_shor_2), 0, 1, 0, 0},
-  {&__pyx_n_s_M, __pyx_k_M, sizeof(__pyx_k_M), 0, 0, 1, 1},
+  {&__pyx_kp_s_GNU_GPL, __pyx_k_GNU_GPL, sizeof(__pyx_k_GNU_GPL), 0, 0, 1, 0},
+  {&__pyx_kp_s_Luciano_Raso, __pyx_k_Luciano_Raso, sizeof(__pyx_k_Luciano_Raso), 0, 0, 1, 0},
   {&__pyx_n_s_N, __pyx_k_N, sizeof(__pyx_k_N), 0, 0, 1, 1},
-  {&__pyx_n_s_N_imp_sample, __pyx_k_N_imp_sample, sizeof(__pyx_k_N_imp_sample), 0, 0, 1, 1},
   {&__pyx_kp_u_Non_native_byte_order_not_suppor, __pyx_k_Non_native_byte_order_not_suppor, sizeof(__pyx_k_Non_native_byte_order_not_suppor), 0, 1, 0, 0},
   {&__pyx_n_s_RuntimeError, __pyx_k_RuntimeError, sizeof(__pyx_k_RuntimeError), 0, 0, 1, 1},
   {&__pyx_kp_s_Users_lraso_Dropbox_Monitoring, __pyx_k_Users_lraso_Dropbox_Monitoring, sizeof(__pyx_k_Users_lraso_Dropbox_Monitoring), 0, 0, 1, 0},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
+  {&__pyx_n_s_author, __pyx_k_author, sizeof(__pyx_k_author), 0, 0, 1, 1},
   {&__pyx_n_s_average_water_level, __pyx_k_average_water_level, sizeof(__pyx_k_average_water_level), 0, 0, 1, 1},
   {&__pyx_n_s_base_year, __pyx_k_base_year, sizeof(__pyx_k_base_year), 0, 0, 1, 1},
+  {&__pyx_n_s_constant_waves, __pyx_k_constant_waves, sizeof(__pyx_k_constant_waves), 0, 0, 1, 1},
+  {&__pyx_n_s_copyright, __pyx_k_copyright, sizeof(__pyx_k_copyright), 0, 0, 1, 1},
   {&__pyx_n_s_crown_height, __pyx_k_crown_height, sizeof(__pyx_k_crown_height), 0, 0, 1, 1},
   {&__pyx_n_s_dike_model_c, __pyx_k_dike_model_c, sizeof(__pyx_k_dike_model_c), 0, 0, 1, 1},
   {&__pyx_n_s_dike_par, __pyx_k_dike_par, sizeof(__pyx_k_dike_par), 0, 0, 1, 1},
   {&__pyx_n_s_empty, __pyx_k_empty, sizeof(__pyx_k_empty), 0, 0, 1, 1},
-  {&__pyx_n_s_freq_fail_importance_sampling, __pyx_k_freq_fail_importance_sampling, sizeof(__pyx_k_freq_fail_importance_sampling), 0, 0, 1, 1},
   {&__pyx_n_s_freq_failure, __pyx_k_freq_failure, sizeof(__pyx_k_freq_failure), 0, 0, 1, 1},
   {&__pyx_n_s_frequency_failure, __pyx_k_frequency_failure, sizeof(__pyx_k_frequency_failure), 0, 0, 1, 1},
-  {&__pyx_n_s_frequency_of_failure, __pyx_k_frequency_of_failure, sizeof(__pyx_k_frequency_of_failure), 0, 0, 1, 1},
   {&__pyx_n_s_gamma_b, __pyx_k_gamma_b, sizeof(__pyx_k_gamma_b), 0, 0, 1, 1},
   {&__pyx_n_s_gamma_beta, __pyx_k_gamma_beta, sizeof(__pyx_k_gamma_beta), 0, 0, 1, 1},
   {&__pyx_n_s_gamma_f, __pyx_k_gamma_f, sizeof(__pyx_k_gamma_f), 0, 0, 1, 1},
   {&__pyx_n_s_height, __pyx_k_height, sizeof(__pyx_k_height), 0, 0, 1, 1},
-  {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
+  {&__pyx_n_s_license, __pyx_k_license, sizeof(__pyx_k_license), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
-  {&__pyx_n_s_n_failure, __pyx_k_n_failure, sizeof(__pyx_k_n_failure), 0, 0, 1, 1},
   {&__pyx_kp_u_ndarray_is_not_C_contiguous, __pyx_k_ndarray_is_not_C_contiguous, sizeof(__pyx_k_ndarray_is_not_C_contiguous), 0, 1, 0, 0},
   {&__pyx_kp_u_ndarray_is_not_Fortran_contiguou, __pyx_k_ndarray_is_not_Fortran_contiguou, sizeof(__pyx_k_ndarray_is_not_Fortran_contiguou), 0, 1, 0, 0},
   {&__pyx_n_s_normal, __pyx_k_normal, sizeof(__pyx_k_normal), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_n_s_ppf, __pyx_k_ppf, sizeof(__pyx_k_ppf), 0, 0, 1, 1},
-  {&__pyx_n_s_prob_of_failure, __pyx_k_prob_of_failure, sizeof(__pyx_k_prob_of_failure), 0, 0, 1, 1},
   {&__pyx_n_s_q_critical, __pyx_k_q_critical, sizeof(__pyx_k_q_critical), 0, 0, 1, 1},
-  {&__pyx_n_s_q_occ, __pyx_k_q_occ, sizeof(__pyx_k_q_occ), 0, 0, 1, 1},
   {&__pyx_n_s_random, __pyx_k_random, sizeof(__pyx_k_random), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_rvs, __pyx_k_rvs, sizeof(__pyx_k_rvs), 0, 0, 1, 1},
   {&__pyx_n_s_slope, __pyx_k_slope, sizeof(__pyx_k_slope), 0, 0, 1, 1},
   {&__pyx_n_s_surge_base_year, __pyx_k_surge_base_year, sizeof(__pyx_k_surge_base_year), 0, 0, 1, 1},
   {&__pyx_n_s_surge_importance_sample, __pyx_k_surge_importance_sample, sizeof(__pyx_k_surge_importance_sample), 0, 0, 1, 1},
-  {&__pyx_n_s_surge_level, __pyx_k_surge_level, sizeof(__pyx_k_surge_level), 0, 0, 1, 1},
   {&__pyx_n_s_surge_level_pdf, __pyx_k_surge_level_pdf, sizeof(__pyx_k_surge_level_pdf), 0, 0, 1, 1},
   {&__pyx_n_s_surge_sample, __pyx_k_surge_sample, sizeof(__pyx_k_surge_sample), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -5184,7 +5073,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 84, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 218, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 799, __pyx_L1_error)
   return 0;
@@ -5196,25 +5085,25 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "dike_model_c.pyx":193
- *     # discharge_breaking_waves
+  /* "dike_model_c.pyx":207
  *     for i in range(N):
+ *         # discharge_breaking_waves
  *         C4 = np.random.normal(4.7, 0.55)  # or 5.2             # <<<<<<<<<<<<<<
  *         Q_b = 0.067 / sqrt(slope) * gamma_b * xi_0 * \
  *               exp(- C4 * R_c / (wave_height * xi_0 * gamma_b * gamma_f * gamma_beta))
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_float_4_7, __pyx_float_0_55); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 193, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_float_4_7, __pyx_float_0_55); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "dike_model_c.pyx":197
+  /* "dike_model_c.pyx":211
  *               exp(- C4 * R_c / (wave_height * xi_0 * gamma_b * gamma_f * gamma_beta))
  *         # discharge_non_breaking_waves
  *         C5 = np.random.normal(2.3, 0.35)  # or 2.6             # <<<<<<<<<<<<<<
  *         Q_n = 0.2 * exp(- C5 * R_c / (wave_height * gamma_f * gamma_beta))
  *         q_occ[i] = min(Q_b, Q_n) * sqrt(g * wave_height ** 3)  # m^3 /m / sec
  */
-  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_float_2_3, __pyx_float_0_35); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_float_2_3, __pyx_float_0_35); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 211, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
@@ -5284,29 +5173,17 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "dike_model_c.pyx":17
+  /* "dike_model_c.pyx":24
  * 
  * 
- * def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300):             # <<<<<<<<<<<<<<
+ * def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300, bint constant_waves=False):             # <<<<<<<<<<<<<<
  *     """calculate the frequency of failure, by montecarlo using a raw implementation of importance sampling
  * 
  */
-  __pyx_tuple__9 = PyTuple_Pack(15, __pyx_n_s_surge_level_pdf, __pyx_n_s_dike_par, __pyx_n_s_average_water_level, __pyx_n_s_N, __pyx_n_s_base_year, __pyx_n_s_crown_height, __pyx_n_s_slope, __pyx_n_s_gamma_b, __pyx_n_s_gamma_beta, __pyx_n_s_gamma_f, __pyx_n_s_q_critical, __pyx_n_s_surge_sample, __pyx_n_s_surge_base_year, __pyx_n_s_surge_importance_sample, __pyx_n_s_freq_failure); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(16, __pyx_n_s_surge_level_pdf, __pyx_n_s_dike_par, __pyx_n_s_average_water_level, __pyx_n_s_N, __pyx_n_s_base_year, __pyx_n_s_constant_waves, __pyx_n_s_crown_height, __pyx_n_s_slope, __pyx_n_s_gamma_b, __pyx_n_s_gamma_beta, __pyx_n_s_gamma_f, __pyx_n_s_q_critical, __pyx_n_s_surge_sample, __pyx_n_s_surge_base_year, __pyx_n_s_surge_importance_sample, __pyx_n_s_freq_failure); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(5, 0, 15, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_lraso_Dropbox_Monitoring, __pyx_n_s_frequency_failure, 17, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 17, __pyx_L1_error)
-
-  /* "dike_model_c.pyx":56
- * 
- * 
- * def freq_fail_importance_sampling ( float average_water_level,             # <<<<<<<<<<<<<<
- *                                     np.ndarray[np.double_t,ndim=1] surge_level, # hydraulic boundary conditions
- *                                     float crown_height,float slope, #dike parameters
- */
-  __pyx_tuple__11 = PyTuple_Pack(17, __pyx_n_s_average_water_level, __pyx_n_s_surge_level, __pyx_n_s_crown_height, __pyx_n_s_slope, __pyx_n_s_gamma_b, __pyx_n_s_gamma_beta, __pyx_n_s_gamma_f, __pyx_n_s_q_critical, __pyx_n_s_N, __pyx_n_s_base_year, __pyx_n_s_i, __pyx_n_s_N_imp_sample, __pyx_n_s_M, __pyx_n_s_n_failure, __pyx_n_s_prob_of_failure, __pyx_n_s_frequency_of_failure, __pyx_n_s_q_occ); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 56, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(10, 0, 17, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_lraso_Dropbox_Monitoring, __pyx_n_s_freq_fail_importance_sampling, 56, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(6, 0, 16, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_lraso_Dropbox_Monitoring, __pyx_n_s_frequency_failure, 24, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5433,43 +5310,57 @@ PyMODINIT_FUNC PyInit_dike_model_c(void)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "dike_model_c.pyx":6
+  /* "dike_model_c.pyx":2
+ * # -*- coding: utf-8 -*-
+ * __author__      = 'Luciano Raso'             # <<<<<<<<<<<<<<
+ * __copyright__   = 'Copyright 2018'
+ * __license__     = 'GNU GPL'
+ */
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_author, __pyx_kp_s_Luciano_Raso) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+
+  /* "dike_model_c.pyx":3
+ * # -*- coding: utf-8 -*-
+ * __author__      = 'Luciano Raso'
+ * __copyright__   = 'Copyright 2018'             # <<<<<<<<<<<<<<
+ * __license__     = 'GNU GPL'
+ * 
+ */
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_copyright, __pyx_kp_s_Copyright_2018) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
+
+  /* "dike_model_c.pyx":4
+ * __author__      = 'Luciano Raso'
+ * __copyright__   = 'Copyright 2018'
+ * __license__     = 'GNU GPL'             # <<<<<<<<<<<<<<
+ * 
+ * """
+ */
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_license, __pyx_kp_s_GNU_GPL) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
+
+  /* "dike_model_c.pyx":13
  * 
  * cimport numpy as np
  * import numpy as np             # <<<<<<<<<<<<<<
  * 
  * #from scipy.stats import gumbel_r, norm
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":17
+  /* "dike_model_c.pyx":24
  * 
  * 
- * def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300):             # <<<<<<<<<<<<<<
+ * def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=10000, base_year=300, bint constant_waves=False):             # <<<<<<<<<<<<<<
  *     """calculate the frequency of failure, by montecarlo using a raw implementation of importance sampling
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12dike_model_c_1frequency_failure, NULL, __pyx_n_s_dike_model_c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12dike_model_c_1frequency_failure, NULL, __pyx_n_s_dike_model_c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_frequency_failure, __pyx_t_1) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_frequency_failure, __pyx_t_1) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "dike_model_c.pyx":56
- * 
- * 
- * def freq_fail_importance_sampling ( float average_water_level,             # <<<<<<<<<<<<<<
- *                                     np.ndarray[np.double_t,ndim=1] surge_level, # hydraulic boundary conditions
- *                                     float crown_height,float slope, #dike parameters
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12dike_model_c_3freq_fail_importance_sampling, NULL, __pyx_n_s_dike_model_c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_freq_fail_importance_sampling, __pyx_t_1) < 0) __PYX_ERR(0, 56, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "dike_model_c.pyx":90
+  /* "dike_model_c.pyx":98
  * # CYTHON PART STARTS HERE
  * 
  * cdef float g = 9.8  # gravity accel m^2/s             # <<<<<<<<<<<<<<
@@ -5479,9 +5370,9 @@ PyMODINIT_FUNC PyInit_dike_model_c(void)
   __pyx_v_12dike_model_c_g = 9.8;
 
   /* "dike_model_c.pyx":1
- * # Model adapted from xx             # <<<<<<<<<<<<<<
- * # Full information to be found in
- * # Wave run-up and overtopping Jentsje W. van der Meer
+ * # -*- coding: utf-8 -*-             # <<<<<<<<<<<<<<
+ * __author__      = 'Luciano Raso'
+ * __copyright__   = 'Copyright 2018'
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -5865,53 +5756,21 @@ static PyObject* __Pyx_PyInt_SubtractCObj(PyObject *op1, PyObject *op2, CYTHON_U
 }
 #endif
 
-/* GetModuleGlobalName */
-  static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
-    PyObject *result;
-#if CYTHON_COMPILING_IN_CPYTHON
-    result = PyDict_GetItem(__pyx_d, name);
-    if (likely(result)) {
-        Py_INCREF(result);
-    } else {
-#else
-    result = PyObject_GetItem(__pyx_d, name);
-    if (!result) {
-        PyErr_Clear();
-#endif
-        result = __Pyx_GetBuiltinName(name);
-    }
-    return result;
-}
-
-/* ArgTypeTest */
-    static void __Pyx_RaiseArgumentTypeInvalid(const char* name, PyObject *obj, PyTypeObject *type) {
-    PyErr_Format(PyExc_TypeError,
-        "Argument '%.200s' has incorrect type (expected %.200s, got %.200s)",
-        name, type->tp_name, Py_TYPE(obj)->tp_name);
-}
-static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, int none_allowed,
-    const char *name, int exact)
-{
+/* ExtTypeTest */
+  static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
     if (unlikely(!type)) {
         PyErr_SetString(PyExc_SystemError, "Missing type object");
         return 0;
     }
-    if (none_allowed && obj == Py_None) return 1;
-    else if (exact) {
-        if (likely(Py_TYPE(obj) == type)) return 1;
-        #if PY_MAJOR_VERSION == 2
-        else if ((type == &PyBaseString_Type) && likely(__Pyx_PyBaseString_CheckExact(obj))) return 1;
-        #endif
-    }
-    else {
-        if (likely(PyObject_TypeCheck(obj, type))) return 1;
-    }
-    __Pyx_RaiseArgumentTypeInvalid(name, obj, type);
+    if (likely(PyObject_TypeCheck(obj, type)))
+        return 1;
+    PyErr_Format(PyExc_TypeError, "Cannot convert %.200s to %.200s",
+                 Py_TYPE(obj)->tp_name, type->tp_name);
     return 0;
 }
 
 /* BufferFormatCheck */
-    static CYTHON_INLINE int __Pyx_IsLittleEndian(void) {
+  static CYTHON_INLINE int __Pyx_IsLittleEndian(void) {
   unsigned int n = 1;
   return *(unsigned char*)(&n) != 0;
 }
@@ -6461,19 +6320,19 @@ static CYTHON_INLINE void __Pyx_SafeReleaseBuffer(Py_buffer* info) {
 }
 
 /* BufferIndexError */
-      static void __Pyx_RaiseBufferIndexError(int axis) {
+    static void __Pyx_RaiseBufferIndexError(int axis) {
   PyErr_Format(PyExc_IndexError,
      "Out of bounds on buffer access (axis %d)", axis);
 }
 
 /* BufferFallbackError */
-      static void __Pyx_RaiseBufferFallbackError(void) {
+    static void __Pyx_RaiseBufferFallbackError(void) {
   PyErr_SetString(PyExc_ValueError,
      "Buffer acquisition failed on assignment; and then reacquiring the old buffer failed too!");
 }
 
 /* PyErrFetchRestore */
-      #if CYTHON_COMPILING_IN_CPYTHON
+    #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
     PyObject *tmp_type, *tmp_value, *tmp_tb;
     tmp_type = tstate->curexc_type;
@@ -6497,7 +6356,7 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 #endif
 
 /* WriteUnraisableException */
-      static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+    static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
                                   CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
                                   int full_traceback, CYTHON_UNUSED int nogil) {
     PyObject *old_exc, *old_val, *old_tb;
@@ -6538,17 +6397,22 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 #endif
 }
 
-/* ExtTypeTest */
-      static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
-    if (unlikely(!type)) {
-        PyErr_SetString(PyExc_SystemError, "Missing type object");
-        return 0;
+/* GetModuleGlobalName */
+    static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
+    PyObject *result;
+#if CYTHON_COMPILING_IN_CPYTHON
+    result = PyDict_GetItem(__pyx_d, name);
+    if (likely(result)) {
+        Py_INCREF(result);
+    } else {
+#else
+    result = PyObject_GetItem(__pyx_d, name);
+    if (!result) {
+        PyErr_Clear();
+#endif
+        result = __Pyx_GetBuiltinName(name);
     }
-    if (likely(PyObject_TypeCheck(obj, type)))
-        return 1;
-    PyErr_Format(PyExc_TypeError, "Cannot convert %.200s to %.200s",
-                 Py_TYPE(obj)->tp_name, type->tp_name);
-    return 0;
+    return result;
 }
 
 /* RaiseTooManyValuesToUnpack */
