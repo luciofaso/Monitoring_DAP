@@ -44,6 +44,7 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     Delta_t = par_lake['Delta_t']
     K = par_lake['K']
     A = par_lake['Surface']
+    h_supply_th = par_lake['supply threshold']
 
     # wind parameters
     a = par_wind['a']
@@ -63,18 +64,19 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     h_bar[0] = h_init
 
     # cycle
-    for t in range(1,H-1):
+    for t in range(1,H):
         h_wind[t] = wind_setup (wind_v_mean[t], wind_d[t], h_bar[t-1], a, b, c, h_0_wind)
         h_bar[t],q_free[t], q_pump[t], q_supply[t] = lake_sim_step (h_bar[t-1], h_wind[t],
                                                 q_ij[t], q_lat[t], q_demand[t],
                                                 pot_evaporation[t],
                                                 h_sea[t][:],
                                                 h_target[t],
+                                                h_supply_th,
                                                 E_pump, pump_capacity,
                                                 Delta_t/A, K)
 
 
-    output = pd.DataFrame(np.array([h_bar, h_wind, q_free,q_pump, q_supply]).transpose(),
+    output = pd.DataFrame(np.array([h_bar, h_wind, q_free, q_pump, q_supply]).transpose(),
                           index = forcings_daily.index, columns=['average water level',
                                                                  'wind setup',
                                                                  'sluices release',
@@ -129,7 +131,7 @@ def lake_sim_step(h_bar_tmin1, h_wind_t,
                   q_ij_t, q_lat_t, q_demand_t,
                   pot_evaporation_t,
                   h_sea_hourly: np.array,
-                  h_target_t,
+                  h_target_t, h_supply_th,
                   E_pump, pump_capacity,
                   Delta_t_S, K):
     """Dynamic model of the lake
@@ -152,14 +154,16 @@ def lake_sim_step(h_bar_tmin1, h_wind_t,
         h_bar_t, q_free, q_pump, q_demand_t, q_supply_t
     """
 
-    # fluxes
+    # uncontrolled in and outflows
+    Delta_h_bar_uncontrolled = Delta_t_S * (q_ij_t + q_lat_t ) - pot_evaporation_t
+    h_bar_t = h_bar_tmin1 + Delta_h_bar_uncontrolled
+
+    # supply
+    q_supply_t = np.minimum( (h_bar_t - h_supply_th) / Delta_t_S , q_demand_t ) if h_bar_t >= h_supply_th else 0
+    h_bar_t = h_bar_t - Delta_t_S * q_supply_t
+
+    # physical max release Afsluitdijk, sluices and pumps
     q_free_max, q_pump_max = discharge_afsluitdijk(h_bar_tmin1 + h_wind_t - h_sea_hourly, K, E_pump, pump_capacity)
-    q_supply_t = q_demand_t # heroic assumption, supply always satisfied TODO set low level lake limit
-
-    #levels
-    Delta_h_bar_no_pump_no_free = Delta_t_S * (q_ij_t + q_lat_t - q_supply_t ) - pot_evaporation_t
-    h_bar_t = h_bar_tmin1 + Delta_h_bar_no_pump_no_free
-
     # spui als het kan
     q_free = np.minimum(  (h_bar_t - h_target_t) / Delta_t_S, q_free_max) if h_bar_t >= h_target_t else 0
     h_bar_t = h_bar_t - Delta_t_S * q_free

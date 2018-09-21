@@ -24,6 +24,7 @@ forcings = forcings['1965':'2013']
 lake_par = {}
 lake_par['Delta_t'] = 3600 * 24 #   daily time-step
 lake_par['Surface'] = 1.182 * 10**9 # m^2
+lake_par['supply threshold'] = -0.5
 
 C = 0.88 # lateral contraction coefficient, [-];
 MU = 0.66 # contraction coefficient, [-];
@@ -90,11 +91,13 @@ def lake_dike_system(h_0,forcings, parameters_cc,lake_par,dike_par,wind_par, pol
     forcings_cc = variate_forcings(forcings,parameters_cc)
 
     # model of water demand
-    k_demand = 0.0
-    forcings_cc['water demand'] = forcings_cc['temperature'] * k_demand
+    # oversimplified model: water demand proportional to temperature
+    forcings['water demand'] = 0
+    k_demand = 400 / 25  # m^3/s /  T
+    forcings['water demand'] = forcings.loc[:, ['temperature', 'water demand']].max(axis=1) * k_demand
 
     # model of rainfall-runoff
-    S_lat = 1.419 * 1000000  # km^2 to m^2
+    S_lat = 1419 * 1000000  # km^2 to m^2
     alpha = 0.5
     forcings_cc['inflow lateral'] = forcings_cc['precipitation'] * S_lat * alpha / lake_par['Delta_t']  # rational formula
 
@@ -166,8 +169,10 @@ def test_ijsselmeer_cc(summer_target = -0.2,
               'pump capacity':pump_capacity, 'pump power': pump_power}
 
     F = ijsselmeer(policy,parameters_cc)
+    yearly_deficit_supply = sum(forcings['water demand'].resample('D') - lake_model_output['water supply']) / \
+                            ( (forcings.index[-1] - forcings.index[0]).days / 365.25 )
 
-    return [F] # it must be a list, for the EMA workbench
+    return [F,yearly_deficit_supply] # it must be a list, for the EMA workbench
 
 
 
