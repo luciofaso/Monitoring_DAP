@@ -22,7 +22,7 @@ forcings = forcings['1965':'2013']
 
 # Lake parameters
 lake_par = {}
-lake_par['Delta_t'] = 3600 * 24 # daily time-step
+lake_par['Delta_t'] = 3600 * 24 #   daily time-step
 lake_par['Surface'] = 1.182 * 10**9 # m^2
 
 C = 0.88 # lateral contraction coefficient, [-];
