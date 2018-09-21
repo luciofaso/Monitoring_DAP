@@ -104,6 +104,12 @@ def lake_dike_system(h_0,forcings, parameters_cc,lake_par,dike_par,wind_par, pol
     # Lake simulation
     model_output = lake_sim(h_0, forcings_cc, lake_par,wind_par['Afsluitdijk'], policy)
 
+    # supply deficit
+    yearly_supply_deficit = sum(forcings_cc['water demand'].resample('D') - model_output['water supply']) / \
+                            ((forcings.index[-1] - forcings.index[0]).days / 365.25)
+
+
+
     # Dike boundary conditions
     h_year_max = yearly_max_wl(model_output['average water level'],forcings.resample('D').mean(),wind_par['Roggebotsluizen'])
     mu_wl,sigma_wl = gumbel_r.fit(h_year_max.values)
@@ -112,7 +118,7 @@ def lake_dike_system(h_0,forcings, parameters_cc,lake_par,dike_par,wind_par, pol
     # Dike failure
     F = frequency_failure(water_level_pdf, dike_par, base_year=100, constant_waves = True)
 
-    return F
+    return (F,yearly_supply_deficit)
 
 
 def variate_forcings(forcings,parameters_cc):
@@ -168,11 +174,9 @@ def test_ijsselmeer_cc(summer_target = -0.2,
     policy = {'summer target':summer_target, 'winter target': winter_target,
               'pump capacity':pump_capacity, 'pump power': pump_power}
 
-    F = ijsselmeer(policy,parameters_cc)
-    yearly_deficit_supply = sum(forcings['water demand'].resample('D') - lake_model_output['water supply']) / \
-                            ( (forcings.index[-1] - forcings.index[0]).days / 365.25 )
+    F, yearly_supply_deficit = ijsselmeer(policy,parameters_cc)
 
-    return [F,yearly_deficit_supply] # it must be a list, for the EMA workbench
+    return [F,yearly_supply_deficit] # it must be a list, for the EMA workbench
 
 
 
