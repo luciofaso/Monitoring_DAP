@@ -105,8 +105,9 @@ def lake_dike_system(h_0,forcings, parameters_cc,lake_par,dike_par,wind_par, pol
     model_output = lake_sim(h_0, forcings_cc, lake_par,wind_par['Afsluitdijk'], policy)
 
     # supply deficit
-    yearly_supply_deficit = sum(forcings_cc['water demand'].resample('D') - model_output['water supply']) / \
-                            ((forcings.index[-1] - forcings.index[0]).days / 365.25)
+    yearly_supply_deficit = sum(forcings_cc['water demand'].resample('D').mean() - model_output['water supply']) / \
+                            ((forcings.index[-1] - forcings.index[0]).days / 365.25 ) # Simulation horizon, in years
+
 
 
 
@@ -121,7 +122,7 @@ def lake_dike_system(h_0,forcings, parameters_cc,lake_par,dike_par,wind_par, pol
     return (F,yearly_supply_deficit)
 
 
-def variate_forcings(forcings,parameters_cc):
+def variate_forcings(forcings, parameters_cc):
     """ variate the external forcings to simulate climatic change
 
     Args:
