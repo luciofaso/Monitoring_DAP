@@ -38,7 +38,7 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     h_target = set_target_level(policy['winter target'], policy['summer target'], forcings_daily.index).values
 
     pump_capacity = policy['pump capacity']
-    E_pump = policy['pump power']
+    pump_head = policy['pump head']
 
     # lake parameters
     Delta_t = par_lake['Delta_t']
@@ -72,7 +72,7 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
                                                 h_sea[t][:],
                                                 h_target[t],
                                                 h_supply_th,
-                                                E_pump, pump_capacity,
+                                                pump_head, pump_capacity,
                                                 Delta_t/A, K)
 
 
@@ -100,7 +100,7 @@ def wind_setup (wind_velocity, wind_direction, h_bar, a, b, c, h_0):
         h_wind (float): wind-setup, i.e. water level increase due to the wind
     """
 
-    h_wind = (c(wind_direction) * wind_velocity ** a ) / ((h_0 + h_bar) ** b)
+    h_wind = (c(wind_direction) * wind_velocity ** a ) / ((h_0 - 0.4 ) ** b)
 
     return h_wind
 
@@ -132,7 +132,7 @@ def lake_sim_step(h_bar_tmin1, h_wind_t,
                   pot_evaporation_t,
                   h_sea_hourly: np.array,
                   h_target_t, h_supply_th,
-                  E_pump, pump_capacity,
+                  pump_head, pump_capacity,
                   Delta_t_S, K):
     """Dynamic model of the lake
 
@@ -163,7 +163,8 @@ def lake_sim_step(h_bar_tmin1, h_wind_t,
     h_bar_t = h_bar_t - Delta_t_S * q_supply_t
 
     # physical max release Afsluitdijk, sluices and pumps
-    q_free_max, q_pump_max = discharge_afsluitdijk(h_bar_tmin1 + h_wind_t - h_sea_hourly, K, E_pump, pump_capacity)
+    q_free_max, q_pump_max = discharge_afsluitdijk( h_sea_hourly - h_bar_tmin1 - h_wind_t , K, pump_head, pump_capacity)
+
     # spui als het kan
     q_free = np.minimum(  (h_bar_t - h_target_t) / Delta_t_S, q_free_max) if h_bar_t >= h_target_t else 0
     h_bar_t = h_bar_t - Delta_t_S * q_free
@@ -175,13 +176,14 @@ def lake_sim_step(h_bar_tmin1, h_wind_t,
 
 
 
-def discharge_afsluitdijk(Delta_h: np.array, K: float, E_pump: float,pump_capacity:float):
+def discharge_afsluitdijk(Delta_h:np.array, K:float, pump_head:float, nominal_pump_capacity:float):
     """Return the maximum free discharge and pumping discharge for given water levels
 
     Args:
         Delta_h (np.array): Difference between
-            * daily water level in the lake, i.e. average water level + wind setup at sluices, in mNAP
             * hourly sea water level, in mNAP
+            * daily water level in the lake, i.e. average water level + wind setup at sluices, in mNAP
+
         K (float): sluices carachteristics, see (Talsma), in m^2
         E (float): pumping power, in [XX]
 
@@ -190,8 +192,8 @@ def discharge_afsluitdijk(Delta_h: np.array, K: float, E_pump: float,pump_capaci
         q_pump_max: max pump, in m^3/s
     """
 
-    q_free_max = np.mean( K * np.sqrt(2 * 9.8 * np.maximum(Delta_h,0) ) )
-    q_pump_max = np.mean( E_pump / ( -np.maximum(Delta_h,0) + E_pump/pump_capacity + 1  ) )
+    q_free_max = np.mean( K * np.sqrt(2 * 9.8 * np.maximum(-Delta_h,0) ) )
+    q_pump_max = np.mean( nominal_pump_capacity * np.sqrt( np.maximum( pump_head - Delta_h,0) ) )
 
     return q_free_max, q_pump_max
 
