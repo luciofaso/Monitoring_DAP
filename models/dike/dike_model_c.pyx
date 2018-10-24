@@ -58,7 +58,7 @@ def frequency_failure(surge_level_pdf, dike_par, average_water_level = 0, N=1000
     return freq_failure
 
 
-
+# CYTHON PART STARTS HERE
 
 cdef freq_fail_importance_sampling ( float average_water_level,
                                     np.ndarray[np.double_t,ndim=1] surge_level, # hydraulic boundary conditions
@@ -85,15 +85,13 @@ cdef freq_fail_importance_sampling ( float average_water_level,
         q_occ = occourred_discharge(average_water_level, surge_level[i], crown_height, slope, gamma_b, gamma_beta, gamma_f, M, constant_waves)
         n_failure += cond_prob_dike_failure(q_occ, q_critical)
 
-    prob_of_failure = n_failure / ( N * base_year ) #TODO if prob_of_failure is 0, numeric problem
-    #if prob_of_failure==0:
-    frequency_of_failure = 1 / prob_of_failure
+
+    prob_of_failure = n_failure / ( N * base_year )
+    ## if prob_of_failure is 0 return 99999 as a flag value
+    frequency_of_failure = 1 / prob_of_failure if prob_of_failure>0 else 99999
 
     return frequency_of_failure
 
-
-
-# CYTHON PART STARTS HERE
 
 cdef float g = 9.8  # gravity accel m^2/s
 
@@ -114,7 +112,6 @@ cdef tuple wave_wind_model_ijssel(float wind_velocity):
 
     wave_height = m_H * wind_velocity
     wave_period = T_0 + m_T * wind_velocity
-
 
     return wave_height,wave_period
 

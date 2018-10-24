@@ -15,6 +15,7 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     # preprocess input
     #forcings['wind velocity'][forcings['wind velocity']<0] = 0 # set negative wind velocity to zero
 
+
     daily_variables = forcings.columns.drop('sea level')
 
     forcings_daily = forcings[daily_variables.values].resample('D').mean()
@@ -38,7 +39,7 @@ def sim_H(h_init, forcings, par_lake, par_wind, policy):
     h_target = set_target_level(policy['winter target'], policy['summer target'], forcings_daily.index).values
 
     pump_capacity = policy['pump capacity']
-    pump_head = policy['pump head']
+    pump_head = 2 # fixed
 
     # lake parameters
     Delta_t = par_lake['Delta_t']
@@ -127,75 +128,81 @@ def set_target_level(winter_target, summer_target, time_index):
     return target_level
 
 
-def lake_sim_step(h_bar_tmin1, h_wind_t,
-                  q_ij_t, q_lat_t, q_demand_t,
-                  pot_evaporation_t,
-                  h_sea_hourly: np.array,
-                  h_target_t, h_supply_th,
-                  pump_head, pump_capacity,
-                  Delta_t_S, K):
-    """Dynamic model of the lake
+try:
+    from lake.lake_model_c import lake_sim_step_c
+    print('lake model cython function successfully imported')
+    lake_sim_step = lake_sim_step_c
+except:
+    print('lake model cython function not imported')
+    def lake_sim_step(h_bar_tmin1, h_wind_t,
+                      q_ij_t, q_lat_t, q_demand_t,
+                      pot_evaporation_t,
+                      h_sea_hourly: np.array,
+                      h_target_t, h_supply_th,
+                      pump_head, pump_capacity,
+                      Delta_t_S, K):
+        """Dynamic model of the lake
 
-    Args:
-        h_bar_tmin1 (float):
-        h_wind_t:
-        q_ij_t:
-        q_lat_t:
-        temperature_t:
-        delta_h_sea_t:
-        shift_h_sea:
-        h_target_t:
-        pump_capacity:
-        Delta_t_S:
-        K:
-
-
-    Returns:
-        h_bar_t, q_free, q_pump, q_demand_t, q_supply_t
-    """
-
-    # uncontrolled in and outflows
-    Delta_h_bar_uncontrolled = Delta_t_S * (q_ij_t + q_lat_t ) - pot_evaporation_t
-    h_bar_t = h_bar_tmin1 + Delta_h_bar_uncontrolled
-
-    # supply
-    q_supply_t = np.minimum( (h_bar_t - h_supply_th) / Delta_t_S , q_demand_t ) if h_bar_t >= h_supply_th else 0
-    h_bar_t = h_bar_t - Delta_t_S * q_supply_t
-
-    # physical max release Afsluitdijk, sluices and pumps
-    q_free_max, q_pump_max = discharge_afsluitdijk( h_sea_hourly - h_bar_tmin1 - h_wind_t , K, pump_head, pump_capacity)
-
-    # spui als het kan
-    q_free = np.minimum(  (h_bar_t - h_target_t) / Delta_t_S, q_free_max) if h_bar_t >= h_target_t else 0
-    h_bar_t = h_bar_t - Delta_t_S * q_free
-    #pump als het moet
-    q_pump = np.minimum(  (h_bar_t - h_target_t) / Delta_t_S, q_pump_max) if h_bar_t >= h_target_t else 0
-    h_bar_t = h_bar_t - Delta_t_S * q_pump
-
-    return h_bar_t, q_free, q_pump, q_supply_t
+        Args:
+            h_bar_tmin1 (float):
+            h_wind_t:
+            q_ij_t:
+            q_lat_t:
+            temperature_t:
+            delta_h_sea_t:
+            shift_h_sea:
+            h_target_t:
+            pump_capacity:
+            Delta_t_S:
+            K:
 
 
+        Returns:
+            h_bar_t, q_free, q_pump, q_demand_t, q_supply_t
+        """
 
-def discharge_afsluitdijk(Delta_h:np.array, K:float, pump_head:float, nominal_pump_capacity:float):
-    """Return the maximum free discharge and pumping discharge for given water levels
+        # uncontrolled in and outflows
+        Delta_h_bar_uncontrolled = Delta_t_S * (q_ij_t + q_lat_t ) - pot_evaporation_t
+        h_bar_t = h_bar_tmin1 + Delta_h_bar_uncontrolled
 
-    Args:
-        Delta_h (np.array): Difference between
-            * hourly sea water level, in mNAP
-            * daily water level in the lake, i.e. average water level + wind setup at sluices, in mNAP
+        # supply
+        q_supply_t = np.minimum( (h_bar_t - h_supply_th) / Delta_t_S , q_demand_t ) if h_bar_t >= h_supply_th else 0
+        h_bar_t = h_bar_t - Delta_t_S * q_supply_t
 
-        K (float): sluices carachteristics, see (Talsma), in m^2
-        E (float): pumping power, in [XX]
+        # physical max release Afsluitdijk, sluices and pumps
+        q_free_max, q_pump_max = discharge_afsluitdijk( h_sea_hourly - h_bar_tmin1 - h_wind_t , K, pump_head, pump_capacity)
 
-    Returns:
-        q_free : max free discharge through the sluices, in m^3/s
-        q_pump_max: max pump, in m^3/s
-    """
+        # spui als het kan
+        q_free = np.minimum(  (h_bar_t - h_target_t) / Delta_t_S, q_free_max) if h_bar_t >= h_target_t else 0
+        h_bar_t = h_bar_t - Delta_t_S * q_free
+        #pump als het moet
+        q_pump = np.minimum(  (h_bar_t - h_target_t) / Delta_t_S, q_pump_max) if h_bar_t >= h_target_t else 0
+        h_bar_t = h_bar_t - Delta_t_S * q_pump
 
-    q_free_max = np.mean( K * np.sqrt(2 * 9.8 * np.maximum(-Delta_h,0) ) )
-    q_pump_max = np.mean( nominal_pump_capacity * np.sqrt( np.maximum( pump_head - Delta_h,0) ) )
+        return h_bar_t, q_free, q_pump, q_supply_t
 
-    return q_free_max, q_pump_max
+
+
+    def discharge_afsluitdijk(Delta_h:np.array, K:float, pump_head:float, nominal_pump_capacity:float):
+        """Return the maximum free discharge and pumping discharge for given water levels
+
+        Args:
+            Delta_h (np.array): Difference between
+                * hourly sea water level, in mNAP
+                * daily water level in the lake, i.e. average water level + wind setup at sluices, in mNAP
+
+            K (float): sluices carachteristics, see (Talsma), in m^2
+            E (float): pumping power, in [XX]
+
+        Returns:
+            q_free : max free discharge through the sluices, in m^3/s
+            q_pump_max: max pump, in m^3/s
+        """
+
+        q_free_max = np.mean( K * np.sqrt(2 * 9.8 * np.maximum(-Delta_h,0) ) )
+        q_pump_max = np.mean( nominal_pump_capacity * np.sqrt( np.maximum( pump_head - Delta_h,0) ) )
+
+        return q_free_max, q_pump_max
 
 
 
